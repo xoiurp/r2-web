@@ -1,5 +1,6 @@
 import {
   VERSION,
+  UPDATED_AT,
   THEME_KEY,
   LANG_KEY,
   VIEW_KEY,
@@ -16,6 +17,7 @@ import { R2Client } from './r2-client.js'
 import { UIManager } from './ui-manager.js'
 import { getCurrentLang, setLang, t } from './i18n.js'
 import { $, getErrorMessage } from './utils.js'
+import dayjs from "dayjs"
 
 /** @typedef {'zh'|'en'|'ja'} Lang */
 
@@ -132,6 +134,12 @@ class App {
     $('#lbl-custom-domain').textContent = t('customDomain')
 
     $('#lbl-filename-tpl').textContent = t('filenameTpl')
+    $('#lbl-filename-tpl-scope').textContent = t('filenameTplScope')
+    const filenameScopeSelect = $('#cfg-filename-tpl-scope')
+    if (filenameScopeSelect) {
+      $('option[value="images"]', filenameScopeSelect).textContent = t('filenameTplScopeImages')
+      $('option[value="all"]', filenameScopeSelect).textContent = t('filenameTplScopeAll')
+    }
     $('#filename-tpl-hint').textContent = t('filenameTplHintDetailed')
 
     $('#lbl-compress-mode').textContent = t('compressMode')
@@ -160,6 +168,9 @@ class App {
     $('#config-dialog-close').dataset.tooltip = t('close')
 
     $('#about-version').textContent = `v${VERSION}`
+    $('#about-updated').textContent = `${t('aboutUpdatedLabel')}: ${dayjs(UPDATED_AT).format(
+      'YYYY-MM-DD HH:mm:ss',
+    )}`
     $('#about-description').textContent = t('aboutDescription')
     $('#about-github').textContent = t('aboutGithub')
     $('#about-license-label').textContent = t('aboutLicense')
@@ -175,6 +186,7 @@ class App {
     $('#help-custom-domain').dataset.tooltip = t('tooltipCustomDomain')
 
     $('#help-filename-tpl').dataset.tooltip = t('tooltipFilenameTpl')
+    $('#help-filename-tpl-scope').dataset.tooltip = t('tooltipFilenameTplScope')
     $('#help-compress-mode').dataset.tooltip = t('tooltipCompressMode')
     $('#help-compress-level').dataset.tooltip = t('tooltipCompressLevel')
     $('#help-tinify-key').dataset.tooltip = t('tooltipTinifyKey')
@@ -228,6 +240,11 @@ class App {
 
     $('#confirm-cancel').textContent = t('cancel')
     $('#confirm-ok').textContent = t('confirm')
+
+    $('#filename-path-title').textContent = t('filenameTplPathTitle')
+    $('#filename-path-desc').textContent = t('filenameTplPathDesc')
+    $('#filename-path-cancel').textContent = t('cancel')
+    $('#filename-path-ok').textContent = t('confirm')
 
     $('#share-dialog-title').textContent = t('shareDialogTitle')
     $('#share-dialog-subtitle').textContent = t('shareDialogSubtitle')
@@ -372,6 +389,7 @@ class App {
     const secretInput = /** @type {HTMLInputElement} */ ($('#cfg-secret-key'))
     const bucketInput = /** @type {HTMLInputElement} */ ($('#cfg-bucket'))
     const tplInput = /** @type {HTMLInputElement} */ ($('#cfg-filename-tpl'))
+    const tplScopeInput = /** @type {HTMLSelectElement | null} */ ($('#cfg-filename-tpl-scope'))
     const domainInput = /** @type {HTMLInputElement} */ ($('#cfg-custom-domain'))
 
     const compressModeInput = /** @type {HTMLSelectElement} */ ($('#cfg-compress-mode'))
@@ -391,6 +409,7 @@ class App {
     if (cfg.secretAccessKey) secretInput.value = cfg.secretAccessKey
     if (cfg.bucket) bucketInput.value = cfg.bucket
     if (cfg.filenameTpl) tplInput.value = cfg.filenameTpl
+    if (tplScopeInput) tplScopeInput.value = cfg.filenameTplScope || 'images'
     if (cfg.customDomain) domainInput.value = cfg.customDomain
 
     if (compressModeInput) compressModeInput.value = cfg.compressMode || 'none'
@@ -452,6 +471,7 @@ class App {
         secretAccessKey: secretInput.value.trim(),
         bucket: bucketInput.value.trim(),
         filenameTpl: tplInput ? tplInput.value.trim() : '',
+        filenameTplScope: tplScopeInput ? tplScopeInput.value : 'images',
         customDomain: domainInput ? domainInput.value.trim().replace(/\/+$/, '') : '',
         compressMode: compressModeInput ? compressModeInput.value : 'none',
         compressLevel: compressLevelInput ? compressLevelInput.value : 'balanced',

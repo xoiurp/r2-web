@@ -3,15 +3,15 @@ import { optimise as optimisePng } from '@jsquash/oxipng'
 import { encode as encodeWebp } from '@jsquash/webp'
 import { encode as encodeAvif } from '@jsquash/avif'
 import { filesize } from 'filesize'
-import { COMPRESSIBLE_IMAGE_RE, MAX_UPLOAD_SIZE } from './constants.js'
+import { COMPRESSIBLE_IMAGE_RE, IMAGE_RE, MAX_UPLOAD_SIZE } from './constants.js'
 import { t } from './i18n.js'
 import { ConfigManager } from './config-manager.js'
 import { FileExplorer } from './file-explorer.js'
 import { R2Client } from './r2-client.js'
 import { UIManager } from './ui-manager.js'
-import { $, applyFilenameTemplate, getMimeType } from './utils.js'
+import { $, applyFilenameTemplate, getFileName, getMimeType } from './utils.js'
 
-/** @typedef {{ accountId?: string; accessKeyId?: string; secretAccessKey?: string; bucket?: string; filenameTpl?: string; customDomain?: string; compressMode?: string; compressLevel?: string; tinifyKey?: string }} AppConfig */
+/** @typedef {{ accountId?: string; accessKeyId?: string; secretAccessKey?: string; bucket?: string; filenameTpl?: string; filenameTplScope?: string; customDomain?: string; compressMode?: string; compressLevel?: string; tinifyKey?: string }} AppConfig */
 
 /**
  * Compress image file based on configuration
@@ -231,6 +231,11 @@ class UploadManager {
 
     const cfg = this.#config.get()
     const filenameTpl = cfg.filenameTpl || ''
+    const filenameTplScope = cfg.filenameTplScope || 'images'
+    const currentPrefix = this.#explorer.currentPrefix
+    /** @type {'template'|'prefix-template'|'prefix-basename'} */
+    let pathStrategy = 'prefix-template'
+    let pathStrategyChosen = false
 
     const uploads = []
     title.textContent = `${t('uploadProgress')} 0/${files.length}`
@@ -266,8 +271,39 @@ class UploadManager {
       }
       file = await compressFile(file, cfg, updateStatus)
 
-      const processedName = await applyFilenameTemplate(filenameTpl, file)
-      const key = this.#explorer.currentPrefix + processedName
+      const shouldApplyTpl =
+        filenameTplScope === 'all' ? true : IMAGE_RE.test(file.name)
+      const processedName = shouldApplyTpl
+        ? await applyFilenameTemplate(filenameTpl, file)
+        : file.name
+
+      if (
+        !pathStrategyChosen &&
+        currentPrefix &&
+        shouldApplyTpl &&
+        (processedName.includes('/') || filenameTpl.includes('/'))
+      ) {
+        const choice = await this.#ui.chooseFilenameTemplatePath(
+          currentPrefix,
+          processedName,
+          filenameTpl,
+        )
+        if (!choice) {
+          panel.hidden = true
+          return
+        }
+        pathStrategy = choice
+        pathStrategyChosen = true
+      }
+
+      let key
+      if (pathStrategy === 'template') {
+        key = processedName
+      } else if (pathStrategy === 'prefix-basename') {
+        key = currentPrefix + getFileName(processedName)
+      } else {
+        key = currentPrefix + processedName
+      }
       const contentType = file.type || getMimeType(file.name)
 
       uploads.push({ id, key, file, contentType })

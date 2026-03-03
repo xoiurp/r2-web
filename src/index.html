@@ -224,7 +224,7 @@
                     name="filenameTpl"
                     type="text"
                     autocomplete="off"
-                    placeholder="[name]_[hash].[ext]"
+                    placeholder="[name]_[hash:6].[ext]"
                   />
                   <small
                     class="text-secondary"
@@ -239,10 +239,20 @@
                       font-size: 11px;
                     "
                   >
-                    例一：[name]_[hash].[ext] 结果：photo_a1b2c3.jpg
+                    例一：[name]_[hash:6].[ext] 结果：photo_a1b2c3.jpg
                     例二：[date:YYYY-MM-DD]_[name].[ext] 结果：2024-03-15_photo.jpg
                     例三：[date:YYYY/MM]/[name].[ext] 结果：2024/03/photo.jpg（当前目录的子目录）
                   </small>
+                </div>
+                <div class="field">
+                  <div class="field-label">
+                    <label for="cfg-filename-tpl-scope" id="lbl-filename-tpl-scope">生效范围</label>
+                    <button type="button" class="help-icon" id="help-filename-tpl-scope">?</button>
+                  </div>
+                  <select id="cfg-filename-tpl-scope" name="filenameTplScope">
+                    <option value="images">仅图片</option>
+                    <option value="all">全部文件</option>
+                  </select>
                 </div>
               </div>
             </form>
@@ -309,12 +319,16 @@
                 <div class="about-header">
                   <img src="favicon.ico" alt="R2 Web" class="about-icon" />
                   <h2 class="about-title">R2 Web</h2>
-                  <p class="about-version" id="about-version">v1.0.0</p>
+                  <div class="about-meta">
+                    <div class="about-version" id="about-version">v1.0.0</div>
+                  </div>
                 </div>
-
+                
                 <p class="about-desc" id="about-description">
                   轻盈优雅的 Web 原生 Cloudflare R2 文件管理器
                 </p>
+
+                <div class="about-updated" id="about-updated">Updated: -</div>
 
                 <div class="about-links">
                   <a
@@ -1086,6 +1100,51 @@
         <div class="dialog-footer">
           <button type="button" class="btn secondary" id="prompt-cancel">取消</button>
           <button type="submit" class="btn primary" id="prompt-ok">确定</button>
+        </div>
+      </form>
+    </dialog>
+
+    <!-- Filename Path Dialog -->
+    <dialog id="filename-path-dialog">
+      <form id="filename-path-form" method="dialog">
+        <div class="dialog-header">
+          <h2 id="filename-path-title">路径选择</h2>
+        </div>
+        <div class="dialog-body">
+          <p class="text-secondary" id="filename-path-desc"></p>
+          <div class="choice-list" id="filename-path-options">
+            <label class="choice-item">
+              <input
+                type="radio"
+                name="filenamePathChoice"
+                id="filename-path-choice-template"
+                value="template"
+              />
+              <span id="filename-path-option-template"></span>
+            </label>
+            <label class="choice-item">
+              <input
+                type="radio"
+                name="filenamePathChoice"
+                id="filename-path-choice-prefix-template"
+                value="prefix-template"
+              />
+              <span id="filename-path-option-prefix-template"></span>
+            </label>
+            <label class="choice-item">
+              <input
+                type="radio"
+                name="filenamePathChoice"
+                id="filename-path-choice-prefix-basename"
+                value="prefix-basename"
+              />
+              <span id="filename-path-option-prefix-basename"></span>
+            </label>
+          </div>
+        </div>
+        <div class="dialog-footer">
+          <button type="button" class="btn secondary" id="filename-path-cancel">取消</button>
+          <button type="submit" class="btn primary" id="filename-path-ok">确认</button>
         </div>
       </form>
     </dialog>

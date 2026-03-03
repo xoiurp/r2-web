@@ -11,6 +11,12 @@ const I18N = {
     filenameTpl: '文件名模板',
     filenameTplHint:
       '占位符: [name] 原始名, [ext] 扩展名, [hash:N] 哈希, [date:FORMAT] 日期, [timestamp] 时间戳, [uuid], 斜杠代表目录 (hash 默认 6 位)',
+    filenameTplScope: '生效范围',
+    filenameTplScopeImages: '仅图片',
+    filenameTplScopeAll: '全部文件',
+    filenameTplPathTitle: '路径选择',
+    filenameTplPathDesc: '当前不在根目录（/），且模板结果包含子目录。请确认目标上传路径。',
+    filenameTplPathDescWithTpl: '当前目录：{prefix}，模板：{template}。请确认目标上传路径。',
     cancel: '取消',
     connect: '连接',
     newFolder: '新目录',
@@ -138,8 +144,9 @@ const I18N = {
     tooltipBucket: 'R2 存储桶名称，所有文件操作将在此桶下进行',
     tooltipCustomDomain: '自定义域名（可选），配置后可一键复制文件的公开访问链接',
     tooltipFilenameTpl: '文件名模板，支持多种占位符自动生成文件名和目录结构',
+    tooltipFilenameTplScope: '选择模板生效范围，默认仅图片',
     filenameTplHintDetailed:
-      '占位符: [name] [ext] [hash:N] [date:FORMAT] [timestamp] [uuid]\n\n例一：[name]_[hash].[ext]\n结果：photo_a1b2c3.jpg\n\n例二：[date:YYYY-MM-DD]_[name].[ext]\n结果：2024-03-15_photo.jpg\n\n例三：[date:YYYY/MM]/[name].[ext]\n结果：2024/03/photo.jpg（当前目录的子目录）',
+      '占位符: [name] [ext] [hash:N] [date:FORMAT] [timestamp] [uuid]\n\n例一：[name]_[hash:6].[ext]\n结果：photo_a1b2c3.jpg\n\n例二：[date:YYYY-MM-DD]_[name].[ext]\n结果：2024-03-15_photo.jpg\n\n例三：[date:YYYY/MM]/[name].[ext]\n结果：2024/03/photo.jpg（不在根目录时会询问你目标上传路径）',
     tooltipCompressMode: '上传前压缩图片，支持 JPEG/PNG/WebP/AVIF 格式，可节省存储空间和带宽',
     tooltipCompressLevel: '压缩质量，平衡模式保持高质量（90%），极致压缩更省空间（75%）',
     tooltipTinifyKey: 'Tinify API Key，存储在本地，需通过代理访问以避免跨域问题',
@@ -165,6 +172,7 @@ const I18N = {
     aboutDescription: '轻盈优雅的 Web 原生 Cloudflare R2 文件管理器',
     aboutGithub: 'GitHub',
     aboutLicense: '开源协议',
+    aboutUpdatedLabel: '更新日期',
   },
   en: {
     appTitle: 'R2 Web',
@@ -178,6 +186,14 @@ const I18N = {
     filenameTpl: 'Filename Template',
     filenameTplHint:
       'Placeholders: [name] original, [ext] extension, [hash:N] hash, [date:FORMAT] date, [timestamp] ts, [uuid], / = directory (hash default 6 chars)',
+    filenameTplScope: 'Applies To',
+    filenameTplScopeImages: 'Images Only',
+    filenameTplScopeAll: 'All Files',
+    filenameTplPathTitle: 'Choose Path',
+    filenameTplPathDesc:
+      'You are not at the root (/), and the template output contains subfolders. Please confirm the upload path.',
+    filenameTplPathDescWithTpl:
+      'Current directory: {prefix}, template: {template}. Please confirm the upload path.',
     cancel: 'Cancel',
     connect: 'Connect',
     newFolder: 'New Folder',
@@ -308,8 +324,9 @@ const I18N = {
     tooltipCustomDomain: 'Custom Domain (optional), enables one-click public URL copying for files',
     tooltipFilenameTpl:
       'Filename template, supports placeholders for auto-generating names and folders',
+    tooltipFilenameTplScope: 'Choose template scope; default is images only',
     filenameTplHintDetailed:
-      'Placeholders: [name] [ext] [hash:N] [date:FORMAT] [timestamp] [uuid]\n\nExample 1: [name]_[hash].[ext]\nResult: photo_a1b2c3.jpg\n\nExample 2: [date:YYYY-MM-DD]_[name].[ext]\nResult: 2024-03-15_photo.jpg\n\nExample 3: [date:YYYY/MM]/[name].[ext]\nResult: 2024/03/photo.jpg (subdirs in current path)',
+      'Placeholders: [name] [ext] [hash:N] [date:FORMAT] [timestamp] [uuid]\n\nExample 1: [name]_[hash:6].[ext]\nResult: photo_a1b2c3.jpg\n\nExample 2: [date:YYYY-MM-DD]_[name].[ext]\nResult: 2024-03-15_photo.jpg\n\nExample 3: [date:YYYY/MM]/[name].[ext]\nResult: 2024/03/photo.jpg (when not at root, you will be asked to confirm the upload path)',
     tooltipCompressMode:
       'Compress images before upload, supports JPEG/PNG/WebP/AVIF to save storage and bandwidth',
     tooltipCompressLevel:
@@ -337,6 +354,7 @@ const I18N = {
     aboutDescription: 'A pure client-side Cloudflare R2 bucket file manager',
     aboutGithub: 'GitHub',
     aboutLicense: 'License',
+    aboutUpdatedLabel: 'Updated',
   },
   ja: {
     appTitle: 'R2 Web',
@@ -349,6 +367,14 @@ const I18N = {
     filenameTpl: 'ファイル名テンプレート',
     filenameTplHint:
       'プレースホルダ: [name] 元名, [ext] 拡張子, [hash:N] ハッシュ, [date:FORMAT] 日付, [timestamp] タイムスタンプ, [uuid], / ディレクトリ (hash デフォルト 6 文字)',
+    filenameTplScope: '適用範囲',
+    filenameTplScopeImages: '画像のみ',
+    filenameTplScopeAll: 'すべてのファイル',
+    filenameTplPathTitle: 'パス選択',
+    filenameTplPathDesc:
+      '現在ルート（/）ではなく、テンプレート結果にサブフォルダがあります。アップロード先のパスを確認してください。',
+    filenameTplPathDescWithTpl:
+      '現在のディレクトリ：{prefix}、テンプレート：{template}。アップロード先のパスを確認してください。',
     cancel: 'キャンセル',
     connect: '接続',
     newFolder: '新規フォルダ',
@@ -481,8 +507,9 @@ const I18N = {
     tooltipCustomDomain:
       'カスタムドメイン（任意）、設定後ファイルの公開 URL をワンクリックでコピーできます',
     tooltipFilenameTpl: 'ファイル名テンプレート、プレースホルダで名前とフォルダ構造を自動生成',
+    tooltipFilenameTplScope: 'テンプレートの適用範囲を選択（既定は画像のみ）',
     filenameTplHintDetailed:
-      'プレースホルダ: [name] [ext] [hash:N] [date:FORMAT] [timestamp] [uuid]\n\n例1: [name]_[hash].[ext]\n結果: photo_a1b2c3.jpg\n\n例2: [date:YYYY-MM-DD]_[name].[ext]\n結果: 2024-03-15_photo.jpg\n\n例3: [date:YYYY/MM]/[name].[ext]\n結果: 2024/03/photo.jpg（現在のディレクトリ配下）',
+      'プレースホルダ: [name] [ext] [hash:N] [date:FORMAT] [timestamp] [uuid]\n\n例1: [name]_[hash:6].[ext]\n結果: photo_a1b2c3.jpg\n\n例2: [date:YYYY-MM-DD]_[name].[ext]\n結果: 2024-03-15_photo.jpg\n\n例3: [date:YYYY/MM]/[name].[ext]\n結果: 2024/03/photo.jpg（ルート以外ではアップロード先の確認があります）',
     tooltipCompressMode:
       'アップロード前に画像を圧縮、JPEG/PNG/WebP/AVIF 対応、ストレージと帯域幅を節約',
     tooltipCompressLevel: '圧縮品質、バランスは高品質を維持（90%）、極限はさらに容量を節約（75%）',
@@ -509,6 +536,7 @@ const I18N = {
     aboutDescription: '純粋なクライアントサイド Cloudflare R2 バケットファイルマネージャー',
     aboutGithub: 'GitHub',
     aboutLicense: 'ライセンス',
+    aboutUpdatedLabel: '更新日',
   },
 }
 

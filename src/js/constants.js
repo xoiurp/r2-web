@@ -1,4 +1,5 @@
-export const VERSION = '1.2.2'
+export const VERSION = '1.3.0'
+export const UPDATED_AT = '2026-03-03T07:22:30Z'
 export const STORAGE_KEY = 'r2-manager-config'
 export const THEME_KEY = 'r2-manager-theme'
 export const LANG_KEY = 'r2-manager-lang'

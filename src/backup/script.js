@@ -176,7 +176,7 @@ const I18N = {
     tooltipCustomDomain: '自定义域名（可选），配置后可一键复制文件的公开访问链接',
     tooltipFilenameTpl: '文件名模板，支持多种占位符自动生成文件名和目录结构',
     filenameTplHintDetailed:
-      '占位符: [name] [ext] [hash:N] [date:FORMAT] [timestamp] [uuid]\n\n例一：[name]_[hash].[ext]\n结果：photo_a1b2c3.jpg\n\n例二：[date:YYYY-MM-DD]_[name].[ext]\n结果：2024-03-15_photo.jpg\n\n例三：[date:YYYY/MM]/[name].[ext]\n结果：2024/03/photo.jpg（当前目录的子目录）',
+      '占位符: [name] [ext] [hash:N] [date:FORMAT] [timestamp] [uuid]\n\n例一：[name]_[hash:6].[ext]\n结果：photo_a1b2c3.jpg\n\n例二：[date:YYYY-MM-DD]_[name].[ext]\n结果：2024-03-15_photo.jpg\n\n例三：[date:YYYY/MM]/[name].[ext]\n结果：2024/03/photo.jpg（当前目录的子目录）',
     tooltipCompressMode: '上传前压缩图片，支持 JPEG/PNG/WebP/AVIF 格式，可节省存储空间和带宽',
     tooltipCompressLevel: '压缩质量，平衡模式保持高质量（90%），极致压缩更省空间（75%）',
     tooltipTinifyKey: 'Tinify API Key，存储在本地，需通过代理访问以避免跨域问题',
@@ -346,7 +346,7 @@ const I18N = {
     tooltipFilenameTpl:
       'Filename template, supports placeholders for auto-generating names and folders',
     filenameTplHintDetailed:
-      'Placeholders: [name] [ext] [hash:N] [date:FORMAT] [timestamp] [uuid]\n\nExample 1: [name]_[hash].[ext]\nResult: photo_a1b2c3.jpg\n\nExample 2: [date:YYYY-MM-DD]_[name].[ext]\nResult: 2024-03-15_photo.jpg\n\nExample 3: [date:YYYY/MM]/[name].[ext]\nResult: 2024/03/photo.jpg (subdirs in current path)',
+      'Placeholders: [name] [ext] [hash:N] [date:FORMAT] [timestamp] [uuid]\n\nExample 1: [name]_[hash:6].[ext]\nResult: photo_a1b2c3.jpg\n\nExample 2: [date:YYYY-MM-DD]_[name].[ext]\nResult: 2024-03-15_photo.jpg\n\nExample 3: [date:YYYY/MM]/[name].[ext]\nResult: 2024/03/photo.jpg (subdirs in current path)',
     tooltipCompressMode:
       'Compress images before upload, supports JPEG/PNG/WebP/AVIF to save storage and bandwidth',
     tooltipCompressLevel:
@@ -519,7 +519,7 @@ const I18N = {
       'カスタムドメイン（任意）、設定後ファイルの公開 URL をワンクリックでコピーできます',
     tooltipFilenameTpl: 'ファイル名テンプレート、プレースホルダで名前とフォルダ構造を自動生成',
     filenameTplHintDetailed:
-      'プレースホルダ: [name] [ext] [hash:N] [date:FORMAT] [timestamp] [uuid]\n\n例1: [name]_[hash].[ext]\n結果: photo_a1b2c3.jpg\n\n例2: [date:YYYY-MM-DD]_[name].[ext]\n結果: 2024-03-15_photo.jpg\n\n例3: [date:YYYY/MM]/[name].[ext]\n結果: 2024/03/photo.jpg（現在のディレクトリ配下）',
+      'プレースホルダ: [name] [ext] [hash:N] [date:FORMAT] [timestamp] [uuid]\n\n例1: [name]_[hash:6].[ext]\n結果: photo_a1b2c3.jpg\n\n例2: [date:YYYY-MM-DD]_[name].[ext]\n結果: 2024-03-15_photo.jpg\n\n例3: [date:YYYY/MM]/[name].[ext]\n結果: 2024/03/photo.jpg（現在のディレクトリ配下）',
     tooltipCompressMode:
       'アップロード前に画像を圧縮、JPEG/PNG/WebP/AVIF 対応、ストレージと帯域幅を節約',
     tooltipCompressLevel: '圧縮品質、バランスは高品質を維持（90%）、極限はさらに容量を節約（75%）',

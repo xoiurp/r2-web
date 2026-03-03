@@ -1,7 +1,7 @@
 import QRCode from 'qrcode'
 import { TOAST_DURATION, THEME_KEY } from './constants.js'
 import { t } from './i18n.js'
-import { $ } from './utils.js'
+import { $, getFileName } from './utils.js'
 
 class UIManager {
   initTheme() {
@@ -333,6 +333,80 @@ class UIManager {
     dialog.addEventListener('close', onDialogClose, { once: true })
 
     dialog.showModal()
+  }
+
+  /**
+   * Choose how to apply a template path when current directory isn't root.
+   * @param {string} currentPrefix
+   * @param {string} processedName
+   * @param {string} template
+   * @returns {Promise<'template'|'prefix-template'|'prefix-basename'|null>}
+   */
+  chooseFilenameTemplatePath(currentPrefix, processedName, template) {
+    return new Promise(resolve => {
+      const dialog = /** @type {HTMLDialogElement} */ ($('#filename-path-dialog'))
+      const form = $('#filename-path-form')
+      const optionTemplate = $('#filename-path-option-template')
+      const optionPrefixTemplate = $('#filename-path-option-prefix-template')
+      const optionPrefixBasename = $('#filename-path-option-prefix-basename')
+      const choicePrefixTemplate = /** @type {HTMLInputElement} */ (
+        $('#filename-path-choice-prefix-template')
+      )
+
+      /** @param {string} str */
+      const trimSlashes = str => str.replace(/^\/+|\/+$/g, '')
+      const prefixClean = trimSlashes(currentPrefix)
+      const nameClean = processedName.replace(/^\/+/, '')
+      const baseName = getFileName(processedName).replace(/^\/+/, '')
+      const prefixLabel = prefixClean ? `/${prefixClean}` : '/'
+
+      const templatePath = '/' + nameClean
+      const prefixTemplatePath = prefixClean ? `/${prefixClean}/${nameClean}` : `/${nameClean}`
+      const prefixBasenamePath = prefixClean ? `/${prefixClean}/${baseName}` : `/${baseName}`
+
+      $('#filename-path-title').textContent = t('filenameTplPathTitle')
+      $('#filename-path-desc').textContent = t('filenameTplPathDescWithTpl', {
+        prefix: prefixLabel,
+        template: template || '-',
+      })
+      optionTemplate.textContent = templatePath
+      optionPrefixTemplate.textContent = prefixTemplatePath
+      optionPrefixBasename.textContent = prefixBasenamePath
+
+      // Default choice: current directory + template path
+      choicePrefixTemplate.checked = true
+
+      /** @type {'template'|'prefix-template'|'prefix-basename'|null} */
+      let result = null
+
+      /** @param {Event} e */
+      const onSubmit = e => {
+        e.preventDefault()
+        const selected = dialog.querySelector('input[name=\"filenamePathChoice\"]:checked')
+        result = /** @type {any} */ (selected)?.value || 'prefix-template'
+        dialog.close()
+      }
+
+      const onCancel = () => dialog.close()
+
+      /** @param {Event} e */
+      const onBackdropClick = e => {
+        if (e.target === dialog) dialog.close()
+      }
+
+      const onClose = () => {
+        form.removeEventListener('submit', onSubmit)
+        $('#filename-path-cancel').removeEventListener('click', onCancel)
+        dialog.removeEventListener('click', onBackdropClick)
+        resolve(result)
+      }
+
+      form.addEventListener('submit', onSubmit)
+      $('#filename-path-cancel').addEventListener('click', onCancel)
+      dialog.addEventListener('click', onBackdropClick)
+      dialog.addEventListener('close', onClose, { once: true })
+      dialog.showModal()
+    })
   }
 
   initTooltip() {

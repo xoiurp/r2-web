@@ -125,6 +125,73 @@
     }
   }
 
+  .choice-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-2);
+    margin-top: var(--sp-2);
+  }
+
+  .choice-item {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-2);
+    padding: var(--sp-2) var(--sp-3);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    background: var(--bg-secondary);
+    cursor: pointer;
+    transition:
+      border-color var(--duration-fast),
+      background var(--duration-fast);
+
+    &:hover {
+      border-color: color-mix(in oklab, var(--border) 60%, var(--accent) 40%);
+      background: var(--bg-tertiary);
+    }
+
+    & input {
+      appearance: none;
+      width: 16px;
+      height: 16px;
+      border: 1.5px solid var(--border);
+      border-radius: 999px;
+      background: var(--bg-primary);
+      display: grid;
+      place-content: center;
+      transition: border-color var(--duration-fast);
+
+      &:focus-visible {
+        outline: 2px solid color-mix(in oklab, var(--accent) 60%, transparent);
+        outline-offset: 2px;
+      }
+
+      &::before {
+        content: '';
+        width: 8px;
+        height: 8px;
+        border-radius: 999px;
+        transform: scale(0);
+        transition: transform var(--duration-fast) var(--ease-out);
+        background: var(--accent);
+      }
+
+      &:checked {
+        border-color: var(--accent);
+      }
+
+      &:checked::before {
+        transform: scale(1);
+      }
+    }
+
+    & span {
+      font-size: var(--text-sm);
+      color: var(--text-primary);
+      font-family: var(--font-mono);
+    }
+  }
+
   /* Field Label Container (label + help icon) */
   .field-label {
     display: flex;
@@ -1493,7 +1560,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: var(--sp-4);
+    gap: var(--sp-3);
     padding: var(--sp-8) var(--sp-4);
     text-align: center;
   }
@@ -1503,6 +1570,13 @@
     flex-direction: column;
     align-items: center;
     gap: var(--sp-3);
+  }
+
+  .about-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--sp-1);
   }
 
   .about-icon {
@@ -1521,6 +1595,15 @@
   .about-version {
     font-size: var(--text-sm);
     color: var(--text-secondary);
+    font-family: var(--font-mono);
+    padding: var(--sp-1) var(--sp-2);
+    background: var(--bg-secondary);
+    border-radius: var(--radius-sm);
+  }
+
+  .about-updated {
+    font-size: var(--text-xs);
+    color: var(--text-tertiary);
     font-family: var(--font-mono);
     padding: var(--sp-1) var(--sp-2);
     background: var(--bg-secondary);

@@ -2,7 +2,7 @@
 
 import path from 'node:path'
 import fs from 'node:fs/promises'
-import { version } from '../package.json'
+import { version } from '../package.json' with { type: 'json' }
 
 const constantsString = await fs.readFile(
   path.resolve(import.meta.dirname, '../src/js/constants.ts'),

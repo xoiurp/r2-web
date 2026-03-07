@@ -1,5 +1,7 @@
 ![93c1205d.png](https://image.viki.moe/github/93c1205d.png)
 
+**中文 | [English](./readme-en.md)**
+
 # R2 Web
 
 📁 轻盈优雅的 Web 原生 Cloudflare R2 文件管理器，一切皆在浏览器中完成。

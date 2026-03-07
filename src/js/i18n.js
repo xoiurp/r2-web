@@ -874,7 +874,25 @@ const I18N = {
 
 /** @typedef {keyof typeof I18N} Lang */
 /** @typedef {keyof typeof I18N.en} I18nKey */
-let currentLang = /** @type {Lang} */ (localStorage.getItem(LANG_KEY) || 'zh')
+
+/** @returns {Lang} */
+function getInitialLang() {
+  const saved = localStorage.getItem(LANG_KEY)
+  if (saved) return /** @type {Lang} */ (saved)
+
+  const browserLang = navigator.language || ''
+  /** @type {Lang} */
+  let detected = 'zh'
+  if (/^zh-(TW|HK|MO)/i.test(browserLang)) detected = 'zh_TW'
+  else if (/^zh/i.test(browserLang)) detected = 'zh'
+  else if (/^ja/i.test(browserLang)) detected = 'ja'
+  else if (/^en/i.test(browserLang)) detected = 'en'
+
+  localStorage.setItem(LANG_KEY, detected)
+  return detected
+}
+
+let currentLang = getInitialLang()
 /** @param {I18nKey} key @param {Record<string, string | number>} [params] @returns {string} */
 function t(key, params = {}) {
   let str = I18N[currentLang]?.[key] || I18N.en[key] || key

@@ -32,7 +32,7 @@ class FileExplorer {
     this.#ui = ui
 
     this.#thumbnailObserver = new IntersectionObserver(
-      entries => {
+      (entries) => {
         for (const entry of entries) {
           if (entry.isIntersecting) {
             const card = /** @type {HTMLElement} */ (entry.target)
@@ -82,6 +82,8 @@ class FileExplorer {
     this.#continuationToken = ''
     this.#loadedItems = []
     $('#file-grid').innerHTML = ''
+    $('#load-more').hidden = true
+    $('#item-count').hidden = true
     this.#updateBreadcrumb()
     await this.#loadPage(true)
   }
@@ -127,7 +129,12 @@ class FileExplorer {
         this.#renderItems(this.#sortItems(this.#loadedItems))
       }
 
-      /** @type {HTMLElement} */ $('#load-more').hidden = !result.isTruncated
+      const countEl = $('#item-count')
+      countEl.textContent = result.isTruncated
+        ? t('itemsPartial', { count: this.#loadedItems.length })
+        : t('itemsTotal', { count: this.#loadedItems.length })
+      countEl.hidden = this.#loadedItems.length === 0
+      $('#load-more').hidden = !result.isTruncated
     } catch (/** @type {any} */ err) {
       if (isInitial) this.#ui.hideSkeleton()
 
@@ -156,9 +163,17 @@ class FileExplorer {
     }
   }
 
+  updateCountDisplay() {
+    if (this.#loadedItems.length === 0) return
+    const isTruncated = !!this.#continuationToken
+    $('#item-count').textContent = isTruncated
+      ? t('itemsPartial', { count: this.#loadedItems.length })
+      : t('itemsTotal', { count: this.#loadedItems.length })
+  }
+
   /** @param {FileItem[]} items @returns {FileItem[]} */
   #sortItems(items) {
-    const { true: folders = [], false: files = [] } = Object.groupBy(items, i => String(i.isFolder))
+    const { true: folders = [], false: files = [] } = Object.groupBy(items, (i) => String(i.isFolder))
 
     /** @type {(a: FileItem, b: FileItem) => number} */
     const byName = (a, b) => extractFileName(a.key).localeCompare(extractFileName(b.key))
@@ -166,20 +181,15 @@ class FileExplorer {
     /** @type {Record<string, (a: FileItem, b: FileItem) => number>} */
     const comparators = {
       name: byName,
-      date: (a, b) =>
-        new Date(a.lastModified ?? 0).getTime() - new Date(b.lastModified ?? 0).getTime(),
+      date: (a, b) => new Date(a.lastModified ?? 0).getTime() - new Date(b.lastModified ?? 0).getTime(),
       size: (a, b) => (a.size ?? 0) - (b.size ?? 0),
     }
 
     const cmp = comparators[this.#sortBy] ?? byName
     const directedCmp =
-      this.#sortOrder === 'asc'
-        ? cmp
-        : (/** @type {FileItem} */ a, /** @type {FileItem} */ b) => cmp(b, a)
+      this.#sortOrder === 'asc' ? cmp : (/** @type {FileItem} */ a, /** @type {FileItem} */ b) => cmp(b, a)
     const directedByName =
-      this.#sortOrder === 'asc'
-        ? byName
-        : (/** @type {FileItem} */ a, /** @type {FileItem} */ b) => byName(b, a)
+      this.#sortOrder === 'asc' ? byName : (/** @type {FileItem} */ a, /** @type {FileItem} */ b) => byName(b, a)
     return [...folders.toSorted(directedByName), ...files.toSorted(directedCmp)]
   }
 

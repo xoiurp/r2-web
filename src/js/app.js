@@ -17,7 +17,7 @@ import { R2Client } from './r2-client.js'
 import { UIManager } from './ui-manager.js'
 import { getCurrentLang, setLang, t } from './i18n.js'
 import { $, getErrorMessage } from './utils.js'
-import dayjs from "dayjs"
+import dayjs from 'dayjs'
 
 /** @typedef {'zh'|'en'|'ja'} Lang */
 
@@ -168,9 +168,7 @@ class App {
     $('#config-dialog-close').dataset.tooltip = t('close')
 
     $('#about-version').textContent = `v${VERSION}`
-    $('#about-updated').textContent = `${t('aboutUpdatedLabel')}: ${dayjs(UPDATED_AT).format(
-      'YYYY-MM-DD HH:mm:ss',
-    )}`
+    $('#about-updated').textContent = `${t('aboutUpdatedLabel')}: ${dayjs(UPDATED_AT).format('YYYY-MM-DD HH:mm:ss')}`
     $('#about-description').textContent = t('aboutDescription')
     $('#about-github').textContent = t('aboutGithub')
     $('#about-license-label').textContent = t('aboutLicense')
@@ -212,6 +210,7 @@ class App {
     $('#paste-hint-text').textContent = t('pasteHint')
 
     $('#load-more-btn').textContent = t('loadMore')
+    this.#explorer?.updateCountDisplay()
 
     $('[data-action="preview"] span').textContent = t('preview')
     $('[data-action="download"] span').textContent = t('download')
@@ -361,25 +360,21 @@ class App {
   #showConfigDialog(defaultTab = 'preferences') {
     const dialog = /** @type {HTMLDialogElement} */ ($('#config-dialog'))
 
-    const tabButtons = /** @type {NodeListOf<HTMLButtonElement>} */ (
-      dialog.querySelectorAll('.config-tab-btn')
-    )
-    const tabPanels = /** @type {NodeListOf<HTMLElement>} */ (
-      dialog.querySelectorAll('.config-tab-panel')
-    )
+    const tabButtons = /** @type {NodeListOf<HTMLButtonElement>} */ (dialog.querySelectorAll('.config-tab-btn'))
+    const tabPanels = /** @type {NodeListOf<HTMLElement>} */ (dialog.querySelectorAll('.config-tab-panel'))
 
     /** @param {string} tabId */
-    const switchTab = tabId => {
-      tabButtons.forEach(btn => {
+    const switchTab = (tabId) => {
+      tabButtons.forEach((btn) => {
         const isActive = btn.dataset.tab === tabId
         btn.setAttribute('aria-selected', String(isActive))
       })
-      tabPanels.forEach(panel => {
+      tabPanels.forEach((panel) => {
         panel.hidden = panel.dataset.panel !== tabId
       })
     }
 
-    tabButtons.forEach(btn => {
+    tabButtons.forEach((btn) => {
       btn.addEventListener('click', () => {
         const tabId = btn.dataset.tab
         if (tabId) switchTab(tabId)
@@ -491,7 +486,7 @@ class App {
       await this.#connectAndLoad()
     }
 
-    dialog.querySelectorAll('form.config-tab-panel').forEach(form => {
+    dialog.querySelectorAll('form.config-tab-panel').forEach((form) => {
       const formElement = /** @type {HTMLFormElement} */ (form)
       formElement.onsubmit = (/** @type {Event} */ e) => e.preventDefault()
     })
@@ -519,14 +514,14 @@ class App {
       await this.#ui.showShareDialog(url)
     })
 
-    document.addEventListener('click', e => {
+    document.addEventListener('click', (e) => {
       const target = /** @type {HTMLElement} */ (e.target)
       if (!target.closest('.context-menu') && !target.closest('.file-card-menu')) {
         this.#ui.hideContextMenu(true)
       }
     })
 
-    document.addEventListener('keydown', e => {
+    document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
         this.#ui.hideContextMenu()
       }
@@ -541,32 +536,24 @@ class App {
       await this.#explorer.refresh()
     })
 
-    $('#breadcrumb').addEventListener('click', e => {
-      const btn = /** @type {HTMLElement | null} */ (
-        /** @type {HTMLElement} */ (e.target).closest('.breadcrumb-btn')
-      )
+    $('#breadcrumb').addEventListener('click', (e) => {
+      const btn = /** @type {HTMLElement | null} */ (/** @type {HTMLElement} */ (e.target).closest('.breadcrumb-btn'))
       if (btn) {
         /** @type {FileExplorer} */ this.#explorer.navigate(btn.dataset.prefix ?? '')
       }
     })
 
-    $('#file-grid').addEventListener('click', e => {
+    $('#file-grid').addEventListener('click', (e) => {
       const target = /** @type {HTMLElement} */ (e.target)
       const menuBtn = /** @type {HTMLElement | null} */ (target.closest('.file-card-menu'))
       if (menuBtn) {
         e.stopPropagation()
         const card = /** @type {HTMLElement} */ (menuBtn.closest('.file-card'))
         const rect = menuBtn.getBoundingClientRect()
-        this.#ui.showContextMenu(
-          rect.right,
-          rect.bottom,
-          card.dataset.key ?? '',
-          card.dataset.isFolder === 'true',
-          {
-            size: Number(card.dataset.size ?? 0),
-            mod: Number(card.dataset.mod ?? 0),
-          },
-        )
+        this.#ui.showContextMenu(rect.right, rect.bottom, card.dataset.key ?? '', card.dataset.isFolder === 'true', {
+          size: Number(card.dataset.size ?? 0),
+          mod: Number(card.dataset.mod ?? 0),
+        })
         return
       }
 
@@ -584,26 +571,18 @@ class App {
       }
     })
 
-    $('#file-grid').addEventListener('contextmenu', e => {
-      const card = /** @type {HTMLElement | null} */ (
-        /** @type {HTMLElement} */ (e.target).closest('.file-card')
-      )
+    $('#file-grid').addEventListener('contextmenu', (e) => {
+      const card = /** @type {HTMLElement | null} */ (/** @type {HTMLElement} */ (e.target).closest('.file-card'))
       if (card) {
         e.preventDefault()
-        this.#ui.showContextMenu(
-          e.clientX,
-          e.clientY,
-          card.dataset.key ?? '',
-          card.dataset.isFolder === 'true',
-          {
-            size: Number(card.dataset.size ?? 0),
-            mod: Number(card.dataset.mod ?? 0),
-          },
-        )
+        this.#ui.showContextMenu(e.clientX, e.clientY, card.dataset.key ?? '', card.dataset.isFolder === 'true', {
+          size: Number(card.dataset.size ?? 0),
+          mod: Number(card.dataset.mod ?? 0),
+        })
       }
     })
 
-    $('#context-menu').addEventListener('click', e => {
+    $('#context-menu').addEventListener('click', (e) => {
       const item = /** @type {HTMLElement | null} */ (
         /** @type {HTMLElement} */ (e.target).closest('.context-menu-item')
       )
@@ -617,8 +596,6 @@ class App {
       const isFolder = menu.dataset.isFolder === 'true'
 
       this.#ui.hideContextMenu()
-
-      
 
       switch (action) {
         case 'preview':
@@ -696,21 +673,15 @@ class App {
       }
     })
 
-    $('#load-more-btn').addEventListener('click', () =>
-      /** @type {FileExplorer} */ (this.#explorer).loadMore(),
-    )
+    $('#load-more-btn').addEventListener('click', () => /** @type {FileExplorer} */ (this.#explorer).loadMore())
 
     const previewDialog = /** @type {HTMLDialogElement} */ ($('#preview-dialog'))
     $('#preview-close').addEventListener('click', () => previewDialog.close())
-    previewDialog.addEventListener('click', e => {
+    previewDialog.addEventListener('click', (e) => {
       if (e.target === previewDialog) previewDialog.close()
     })
-    $('#preview-download').addEventListener('click', () =>
-      /** @type {FilePreview} */ (this.#preview).downloadCurrent(),
-    )
-    $('#preview-copy').addEventListener('click', () =>
-      /** @type {FilePreview} */ (this.#preview).copyCurrentText(),
-    )
+    $('#preview-download').addEventListener('click', () => /** @type {FilePreview} */ (this.#preview).downloadCurrent())
+    $('#preview-copy').addEventListener('click', () => /** @type {FilePreview} */ (this.#preview).copyCurrentText())
 
     $('#upload-panel-close').addEventListener('click', () => {
       $('#upload-panel').hidden = true

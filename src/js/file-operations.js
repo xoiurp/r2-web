@@ -25,7 +25,7 @@ class FileOperations {
     const oldName = extractFileName(key)
     const newName = await this.#ui.prompt(t('renameTitle'), t('renameLabel'), oldName, {
       hint: t('r2CopyHint'),
-      validate: v => {
+      validate: (v) => {
         const illegal = v.match(/[/\\:*?"<>|\x00-\x1F]/g)
         if (illegal) return t('renameInvalidChars', { chars: [...new Set(illegal)].join('  ') })
         return null
@@ -70,19 +70,14 @@ class FileOperations {
     const name = extractFileName(key)
     const currentPrefix = this.#explorer.currentPrefix
 
-    const dest = await this.#ui.prompt(
-      t('copyTitle'),
-      t('copyLabel'),
-      currentPrefix + name + (isFolder ? '/' : ''),
-      {
-        hint: isFolder ? t('copyFolderHint') : undefined,
-        validate: v => {
-          const illegal = v.match(/[\\:*?"<>|\x00-\x1F]/g)
-          if (illegal) return t('pathInvalidChars', { chars: [...new Set(illegal)].join('  ') })
-          return null
-        },
+    const dest = await this.#ui.prompt(t('copyTitle'), t('copyLabel'), currentPrefix + name + (isFolder ? '/' : ''), {
+      hint: isFolder ? t('copyFolderHint') : undefined,
+      validate: (v) => {
+        const illegal = v.match(/[\\:*?"<>|\x00-\x1F]/g)
+        if (illegal) return t('pathInvalidChars', { chars: [...new Set(illegal)].join('  ') })
+        return null
       },
-    )
+    })
     if (!dest) return
 
     try {
@@ -122,15 +117,15 @@ class FileOperations {
     const currentPrefix = this.#explorer.currentPrefix
 
     /** @param {string} v */
-    const resolveDest = v => {
+    const resolveDest = (v) => {
       const folder = v === '' ? '' : v.endsWith('/') ? v : v + '/'
       return folder + name + (isFolder ? '/' : '')
     }
 
     const destFolder = await this.#ui.prompt(t('moveTitle'), t('moveLabel'), currentPrefix, {
       hint: t('r2CopyHint'),
-      preview: v => '→ ' + resolveDest(v),
-      validate: v => (resolveDest(v) === key ? t('moveSamePath') : null),
+      preview: (v) => '→ ' + resolveDest(v),
+      validate: (v) => (resolveDest(v) === key ? t('moveSamePath') : null),
     })
 
     if (destFolder === null) return
@@ -183,7 +178,7 @@ class FileOperations {
       if (isFolder) {
         await this.#recursiveOperation(
           key,
-          async srcKey => {
+          async (srcKey) => {
             await this.#r2.deleteObject(srcKey)
           },
           false,
@@ -312,13 +307,13 @@ class FileOperations {
 
     for (let i = 0; i < allKeys.length; i += 5) {
       const batch = allKeys.slice(i, i + 5)
-      await Promise.all(batch.map(k => operation(k)))
+      await Promise.all(batch.map((k) => operation(k)))
     }
 
     if (deleteSource) {
       for (let i = 0; i < allKeys.length; i += 5) {
         const batch = allKeys.slice(i, i + 5)
-        await Promise.all(batch.map(k => this.#r2.deleteObject(k)))
+        await Promise.all(batch.map((k) => this.#r2.deleteObject(k)))
       }
       try {
         await this.#r2.deleteObject(prefix)

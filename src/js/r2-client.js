@@ -44,20 +44,20 @@ class R2Client {
     const doc = new DOMParser().parseFromString(text, 'application/xml')
 
     /** @type {FileItem[]} */
-    const folders = [...doc.querySelectorAll('CommonPrefixes > Prefix')].map(el => ({
+    const folders = [...doc.querySelectorAll('CommonPrefixes > Prefix')].map((el) => ({
       key: el.textContent ?? '',
       isFolder: true,
     }))
 
     /** @type {FileItem[]} */
     const files = [...doc.querySelectorAll('Contents')]
-      .map(el => ({
+      .map((el) => ({
         key: el.querySelector('Key')?.textContent ?? '',
         size: parseInt(el.querySelector('Size')?.textContent ?? '0', 10),
         lastModified: el.querySelector('LastModified')?.textContent ?? '',
         isFolder: false,
       }))
-      .filter(f => f.key !== prefix)
+      .filter((f) => f.key !== prefix)
 
     const isTruncated = doc.querySelector('IsTruncated')?.textContent === 'true'
     const nextToken = doc.querySelector('NextContinuationToken')?.textContent || ''

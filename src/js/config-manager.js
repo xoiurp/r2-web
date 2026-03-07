@@ -1,12 +1,4 @@
-import {
-  STORAGE_KEY,
-  THEME_KEY,
-  LANG_KEY,
-  VIEW_KEY,
-  DENSITY_KEY,
-  SORT_BY_KEY,
-  SORT_ORDER_KEY,
-} from './constants.js'
+import { STORAGE_KEY, THEME_KEY, LANG_KEY, VIEW_KEY, DENSITY_KEY, SORT_BY_KEY, SORT_ORDER_KEY } from './constants.js'
 
 /** @typedef {{ accountId?: string; accessKeyId?: string; secretAccessKey?: string; bucket?: string; filenameTpl?: string; filenameTplScope?: string; customDomain?: string; compressMode?: string; compressLevel?: string; tinifyKey?: string }} AppConfig */
 /** @typedef {AppConfig & { theme?: string; lang?: string; view?: string; density?: string; sortBy?: string; sortOrder?: string }} SharePayload */

@@ -133,10 +133,7 @@ async function compressFile(file, config, onStatus) {
 
       const savings = Math.round((1 - compressedBlob.size / originalSize) * 100)
       if (savings > 0) {
-        onStatus &&
-          onStatus(
-            `Tinify: ${filesize(originalSize)} → ${filesize(compressedBlob.size)} (省 ${savings}%)`,
-          )
+        onStatus && onStatus(`Tinify: ${filesize(originalSize)} → ${filesize(compressedBlob.size)} (省 ${savings}%)`)
       } else {
         onStatus && onStatus(`Tinify: 已优化 (${filesize(compressedBlob.size)})`)
       }
@@ -199,12 +196,12 @@ class UploadManager {
       }
     }
 
-    app.addEventListener('dragenter', e => {
+    app.addEventListener('dragenter', (e) => {
       e.preventDefault()
       showDropzone()
     })
 
-    app.addEventListener('dragleave', e => {
+    app.addEventListener('dragleave', (e) => {
       e.preventDefault()
       hideDropzone()
     })
@@ -216,12 +213,12 @@ class UploadManager {
 
     app.addEventListener('drop', handleDrop)
 
-    dropzone.addEventListener('dragenter', e => {
+    dropzone.addEventListener('dragenter', (e) => {
       e.preventDefault()
       showDropzone()
     })
 
-    dropzone.addEventListener('dragleave', e => {
+    dropzone.addEventListener('dragleave', (e) => {
       e.preventDefault()
       hideDropzone()
     })
@@ -233,7 +230,7 @@ class UploadManager {
 
     dropzone.addEventListener('drop', handleDrop)
 
-    document.addEventListener('paste', async e => {
+    document.addEventListener('paste', async (e) => {
       const target = /** @type {HTMLElement} */ (e.target)
       const tag = target.tagName
       if (tag === 'INPUT' || tag === 'TEXTAREA' || target.isContentEditable) return
@@ -243,16 +240,14 @@ class UploadManager {
       const plainText = e.clipboardData?.getData('text/plain') || ''
       const hasHtml = Boolean(htmlText.trim())
       const hasText = Boolean(plainText.trim() || hasHtml)
-      const hasImageItem = items.some(
-        item => item.kind === 'file' && item.type.startsWith('image/'),
-      )
+      const hasImageItem = items.some((item) => item.kind === 'file' && item.type.startsWith('image/'))
       const hasHtmlImage = hasHtml && /<img[\s>]/i.test(htmlText)
 
       /** @type {File[]} */
       const files = items
-        .filter(item => item.kind === 'file')
-        .map(item => item.getAsFile())
-        .filter(/** @returns {f is File} */ f => f !== null)
+        .filter((item) => item.kind === 'file')
+        .map((item) => item.getAsFile())
+        .filter(/** @returns {f is File} */ (f) => f !== null)
 
       if ((hasImageItem || hasHtmlImage) && hasText) {
         this.#ui.toast(t('pasteMixedNotSupported'), 'info')
@@ -261,7 +256,7 @@ class UploadManager {
 
       if (files.length > 0) {
         e.preventDefault()
-        const allImages = files.every(f => f.type.startsWith('image/'))
+        const allImages = files.every((f) => f.type.startsWith('image/'))
         if (allImages) {
           this.#ui.toast(t('pasteToUpload', { count: files.length }), 'info')
           this.uploadFiles(files)
@@ -270,17 +265,10 @@ class UploadManager {
 
         if (files.length === 1) {
           const file = files[0]
-          const ok = await this.#ui.confirm(
-            t('pasteFileConfirmTitle'),
-            t('pasteFileConfirmMsg', { name: file.name }),
-          )
+          const ok = await this.#ui.confirm(t('pasteFileConfirmTitle'), t('pasteFileConfirmMsg', { name: file.name }))
           if (!ok) return
           const suggestedPath = this.#explorer.currentPrefix + file.name
-          const targetPath = await this.#ui.prompt(
-            t('pasteFilePathTitle'),
-            t('pasteFilePathLabel'),
-            suggestedPath,
-          )
+          const targetPath = await this.#ui.prompt(t('pasteFilePathTitle'), t('pasteFilePathLabel'), suggestedPath)
           if (!targetPath) return
           await this.uploadFiles([file], targetPath)
           return
@@ -317,11 +305,7 @@ class UploadManager {
         }
 
         const suggestedPath = this.#explorer.currentPrefix + filename
-        const targetPath = await this.#ui.prompt(
-          t('pasteTextPathTitle'),
-          t('pasteTextPathLabel'),
-          suggestedPath,
-        )
+        const targetPath = await this.#ui.prompt(t('pasteTextPathTitle'), t('pasteTextPathLabel'), suggestedPath)
         if (!targetPath) return
 
         const file = new File([content], filename, { type: 'text/plain' })
@@ -363,9 +347,7 @@ class UploadManager {
       }
 
       const shouldApplyTpl = filenameTplScope === 'all' ? true : IMAGE_RE.test(file.name)
-      const processedName = shouldApplyTpl
-        ? await applyFilenameTemplate(filenameTpl, file)
-        : file.name
+      const processedName = shouldApplyTpl ? await applyFilenameTemplate(filenameTpl, file) : file.name
 
       if (
         !pathStrategyChosen &&
@@ -373,11 +355,7 @@ class UploadManager {
         shouldApplyTpl &&
         (processedName.includes('/') || filenameTpl.includes('/'))
       ) {
-        const choice = await this.#ui.chooseFilenameTemplatePath(
-          currentPrefix,
-          processedName,
-          filenameTpl,
-        )
+        const choice = await this.#ui.chooseFilenameTemplatePath(currentPrefix, processedName, filenameTpl)
         if (!choice) {
           panel.hidden = true
           return
@@ -412,8 +390,15 @@ class UploadManager {
             continue
           }
           const choice = await this.#ui.confirmOverwrite(extractFileName(key), files.length > 1)
-          if (choice === 'skip') { skippedCount++; continue }
-          if (choice === 'skip-all') { conflictDecision = 'skip-all'; skippedCount++; continue }
+          if (choice === 'skip') {
+            skippedCount++
+            continue
+          }
+          if (choice === 'skip-all') {
+            conflictDecision = 'skip-all'
+            skippedCount++
+            continue
+          }
           if (choice === 'overwrite-all') conflictDecision = 'overwrite-all'
           // 'overwrite': fall through to upload
         }
@@ -438,7 +423,7 @@ class UploadManager {
       `
       body.appendChild(item)
 
-      const updateStatus = /** @param {string} msg */ msg => {
+      const updateStatus = /** @param {string} msg */ (msg) => {
         const statusEl = $(`#${id}-status`)
         if (statusEl) statusEl.textContent = msg
       }
@@ -460,14 +445,14 @@ class UploadManager {
 
     let completed = 0
     const results = await Promise.allSettled(
-      uploads.map(u =>
+      uploads.map((u) =>
         this.#uploadSingleFile(u.id, u.key, u.file, u.contentType).then(
-          result => {
+          (result) => {
             completed++
             title.textContent = `${t('uploadProgress')} ${completed}/${uploads.length}`
             return result
           },
-          error => {
+          (error) => {
             completed++
             title.textContent = `${t('uploadProgress')} ${completed}/${uploads.length}`
             throw error
@@ -476,8 +461,8 @@ class UploadManager {
       ),
     )
 
-    const success = results.filter(r => r.status === 'fulfilled').length
-    const fail = results.filter(r => r.status === 'rejected').length
+    const success = results.filter((r) => r.status === 'fulfilled').length
+    const fail = results.filter((r) => r.status === 'rejected').length
 
     if (fail === 0) {
       this.#ui.toast(t('uploadSuccess', { count: success }), 'success')

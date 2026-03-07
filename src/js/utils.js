@@ -1,13 +1,5 @@
 import dayjs from 'dayjs'
-import {
-  IMAGE_RE,
-  VIDEO_RE,
-  AUDIO_RE,
-  DOCUMENT_RE,
-  ARCHIVE_RE,
-  CODE_RE,
-  TEXT_RE,
-} from './constants.js'
+import { IMAGE_RE, VIDEO_RE, AUDIO_RE, DOCUMENT_RE, ARCHIVE_RE, CODE_RE, TEXT_RE } from './constants.js'
 import { getCurrentLang } from './i18n.js'
 
 /** @type {<T extends HTMLElement = HTMLElement>(sel: string, ctx?: ParentNode) => T} */
@@ -17,16 +9,13 @@ const $ = (sel, ctx = document) => /** @type {*} */ (ctx.querySelector(sel))
 function formatDate(dateStr) {
   const d = new Date(dateStr)
   const currentLang = getCurrentLang()
-  return d.toLocaleDateString(
-    currentLang === 'zh' ? 'zh-CN' : currentLang === 'ja' ? 'ja-JP' : 'en-US',
-    {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-    },
-  )
+  return d.toLocaleDateString(currentLang === 'zh' ? 'zh-CN' : currentLang === 'ja' ? 'ja-JP' : 'en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+  })
 }
 
 /** @param {string} key @returns {string} */
@@ -207,7 +196,7 @@ async function computeFileHash(file) {
   const buffer = await file.arrayBuffer()
   const hashBuffer = await crypto.subtle.digest('SHA-256', buffer)
   return Array.from(new Uint8Array(hashBuffer))
-    .map(b => b.toString(16).padStart(2, '0'))
+    .map((b) => b.toString(16).padStart(2, '0'))
     .join('')
 }
 
@@ -225,13 +214,9 @@ async function applyFilenameTemplate(template, file) {
   result = result.replace(/\[ext\]/g, ext)
   result = result.replace(/\[timestamp\]/g, String(Math.floor(Date.now() / 1000)))
   result = result.replace(/\[uuid\]/g, crypto.randomUUID())
-  result = result.replace(/\[hash:(\d+)\]/g, (_, n) =>
-    fileHash.slice(0, parseInt(/** @type {string} */ (n), 10)),
-  )
+  result = result.replace(/\[hash:(\d+)\]/g, (_, n) => fileHash.slice(0, parseInt(/** @type {string} */ (n), 10)))
   result = result.replace(/\[hash\]/g, fileHash.slice(0, 6))
-  result = result.replace(/\[date:([^\]]+)\]/g, (_, format) =>
-    dayjs().format(/** @type {string} */ (format)),
-  )
+  result = result.replace(/\[date:([^\]]+)\]/g, (_, format) => dayjs().format(/** @type {string} */ (format)))
 
   return result
 }

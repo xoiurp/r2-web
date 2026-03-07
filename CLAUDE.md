@@ -9,6 +9,7 @@
 **核心特性** 文件上传、目录浏览、文件预览、文件操作、图片压缩、PWA、多语言（zh/en/ja）、浅色/深色主题。
 
 **快速启动**
+
 ```bash
 npx serve src
 # 或
@@ -19,16 +20,16 @@ python3 -m http.server 5500 --directory src
 
 ### 快速定位表
 
-| 任务 | 文件 |
-|------|------|
+| 任务               | 文件                                        |
+| ------------------ | ------------------------------------------- |
 | 修改文件名模板逻辑 | `src/js/utils.js` — `applyFilenameTemplate` |
-| 修改图片压缩逻辑 | `src/js/upload-manager.js` — `compressFile` |
-| 添加 i18n 文案 | `src/js/i18n.js` — `const I18N` |
-| 修改按钮样式 | `src/css/components.css` — `.btn` |
-| 添加设计 Token | `src/css/tokens.css` |
-| 修改 R2 API 操作 | `src/js/r2-client.js` |
-| 修改文件浏览逻辑 | `src/js/file-explorer.js` |
-| 修改上传管理逻辑 | `src/js/upload-manager.js` |
+| 修改图片压缩逻辑   | `src/js/upload-manager.js` — `compressFile` |
+| 添加 i18n 文案     | `src/js/i18n.js` — `const I18N`             |
+| 修改按钮样式       | `src/css/components.css` — `.btn`           |
+| 添加设计 Token     | `src/css/tokens.css`                        |
+| 修改 R2 API 操作   | `src/js/r2-client.js`                       |
+| 修改文件浏览逻辑   | `src/js/file-explorer.js`                   |
+| 修改上传管理逻辑   | `src/js/upload-manager.js`                  |
 
 ### 工具函数列表
 
@@ -108,16 +109,16 @@ pnpm add -D package-name@x.y.z
 
 每个类独立为一个模块，位于 `src/js/`：
 
-| 类 | 文件 | 职责 |
-| --- | --- | --- |
-| `ConfigManager` | `config-manager.js` | localStorage 持久化、Base64 配置分享 |
-| `R2Client` | `r2-client.js` | S3 API 客户端（基于 `aws4fetch` 签名） |
-| `UIManager` | `ui-manager.js` | 主题、Toast、对话框、上下文菜单、Tooltip |
-| `FileExplorer` | `file-explorer.js` | 目录导航、排序、分页、懒加载缩略图、列表缓存 |
-| `UploadManager` | `upload-manager.js` | 拖拽/粘贴上传、文件名模板、图片压缩 |
-| `FilePreview` | `file-preview.js` | 图片/视频/音频/文本预览 |
-| `FileOperations` | `file-operations.js` | 重命名、复制、移动、删除（递归删除文件夹） |
-| `App` | `app.js` | 主协调器、i18n 处理 |
+| 类               | 文件                 | 职责                                         |
+| ---------------- | -------------------- | -------------------------------------------- |
+| `ConfigManager`  | `config-manager.js`  | localStorage 持久化、Base64 配置分享         |
+| `R2Client`       | `r2-client.js`       | S3 API 客户端（基于 `aws4fetch` 签名）       |
+| `UIManager`      | `ui-manager.js`      | 主题、Toast、对话框、上下文菜单、Tooltip     |
+| `FileExplorer`   | `file-explorer.js`   | 目录导航、排序、分页、懒加载缩略图、列表缓存 |
+| `UploadManager`  | `upload-manager.js`  | 拖拽/粘贴上传、文件名模板、图片压缩          |
+| `FilePreview`    | `file-preview.js`    | 图片/视频/音频/文本预览                      |
+| `FileOperations` | `file-operations.js` | 重命名、复制、移动、删除（递归删除文件夹）   |
+| `App`            | `app.js`             | 主协调器、i18n 处理                          |
 
 **应用初始化** 在 `src/main.js`：
 
@@ -163,6 +164,7 @@ await #loadPage(isInitial, bypassCache = false)
 所有样式值通过 CSS 自定义属性定义（`src/css/tokens.css`）：
 
 **Token 类别**
+
 - **间距** `--sp-*`（1/2/3/4/5/6/8/10/12）
 - **字体** `--text-*`（xs/sm/base/md/lg/xl）
 - **颜色** `--bg-*`、`--text-*`、`--border-*`（light-dark 自适应）
@@ -173,6 +175,7 @@ await #loadPage(isInitial, bypassCache = false)
 **使用方式** 在 `src/css/tokens.css` 查看完整定义。
 
 **示例**
+
 ```css
 .card {
   padding: var(--sp-4);
@@ -191,6 +194,7 @@ await #loadPage(isInitial, bypassCache = false)
 **优先使用 `src/css/components.css`（1453 行）中的组件类**
 
 **组件列表**
+
 - 按钮：`.btn` `.btn-primary` `.btn-secondary` `.btn-danger` `.icon-btn`
 - 输入：`.input` `.select` `.textarea`
 - 对话框：`.dialog-header` `.dialog-body` `.dialog-footer`
@@ -251,6 +255,19 @@ async uploadFile(file, customPath) {
 }
 ```
 
+#### 内联 JSDoc Cast 的 ASI 陷阱
+
+`/** @type {T} */ (expr)` 行内转换若紧跟在**无分号的多行表达式**之后，`(` 会被解析为上一行的函数调用续行，导致整个 class 解析失败。
+
+```javascript
+// ❌ 上一行三元无分号，下一行 ( 开头 → 运行时 class 崩溃
+el.textContent = flag ? t('a') : (t('b')(/** @type {HTMLElement} */ $('#btn')).hidden = true)
+
+// ✅ 改用临时变量，避免行内 cast 紧跟表达式
+const btn = /** @type {HTMLElement} */ ($('#btn'))
+btn.hidden = true
+```
+
 ## i18n 速查
 
 ### 多语言机制
@@ -273,16 +290,16 @@ async uploadFile(file, customPath) {
 const I18N = {
   zh: {
     deleteConfirm: '确定删除 {name} 吗？',
-    deleteSuccess: '删除成功'
+    deleteSuccess: '删除成功',
   },
   en: {
     deleteConfirm: 'Delete {name}?',
-    deleteSuccess: 'Deleted successfully'
+    deleteSuccess: 'Deleted successfully',
   },
   ja: {
     deleteConfirm: '{name} を削除しますか？',
-    deleteSuccess: '削除しました'
-  }
+    deleteSuccess: '削除しました',
+  },
 }
 
 // 2. 代码中使用
@@ -304,16 +321,16 @@ R2 桶必须配置 CORS 允许应用域名（详见 `readme.md`）。
 
 完整方法列表见 `src/js/r2-client.js`：
 
-| 方法 | 功能 |
-|------|------|
-| `listObjects(prefix, continuationToken)` | 列出对象（ListObjectsV2） |
-| `putObjectSigned(key, contentType)` | 生成上传预签名信息 |
-| `getPresignedUrl(key)` | 生成访问预签名 URL |
-| `getPublicUrl(key)` | 生成公开 URL（需配置自定义域名） |
-| `headObject(key)` | 获取对象元数据（HEAD） |
-| `deleteObject(key)` | 删除对象 |
-| `copyObject(src, dest)` | 复制对象 |
-| `createFolder(prefix)` | 创建文件夹（零字节对象） |
+| 方法                                     | 功能                             |
+| ---------------------------------------- | -------------------------------- |
+| `listObjects(prefix, continuationToken)` | 列出对象（ListObjectsV2）        |
+| `putObjectSigned(key, contentType)`      | 生成上传预签名信息               |
+| `getPresignedUrl(key)`                   | 生成访问预签名 URL               |
+| `getPublicUrl(key)`                      | 生成公开 URL（需配置自定义域名） |
+| `headObject(key)`                        | 获取对象元数据（HEAD）           |
+| `deleteObject(key)`                      | 删除对象                         |
+| `copyObject(src, dest)`                  | 复制对象                         |
+| `createFolder(prefix)`                   | 创建文件夹（零字节对象）         |
 
 所有请求通过 AWS Signature Version 4 签名（`aws4fetch` 库）。
 
@@ -332,7 +349,7 @@ class R2Client {
     const url = `${this.endpoint}/${encodeURIComponent(key)}`
     const request = new Request(url, {
       method: 'GET',
-      headers: { 'Content-Type': 'application/json' }
+      headers: { 'Content-Type': 'application/json' },
     })
 
     // 使用 aws4fetch 签名
@@ -448,9 +465,7 @@ class R2Client {
 
    <!-- 有表单提交时（如 prompt、confirm） -->
    <dialog id="my-dialog">
-     <form id="my-form" method="dialog">
-       ...
-     </form>
+     <form id="my-form" method="dialog">...</form>
    </dialog>
    ```
 
@@ -459,7 +474,8 @@ class R2Client {
    ```css
    #prompt-dialog > form,
    #confirm-dialog > form,
-   #my-dialog > .dialog-panel { /* ← 在此追加 */
+   #my-dialog > .dialog-panel {
+     /* ← 在此追加 */
      width: min(420px, calc(100vw - 48px));
    }
    ```
@@ -499,14 +515,14 @@ class R2Client {
 
 ### 常见问题速查
 
-| 问题 | 检查项 |
-|------|--------|
-| 上传失败 | CORS 配置、凭证有效性 |
+| 问题         | 检查项                                 |
+| ------------ | -------------------------------------- |
+| 上传失败     | CORS 配置、凭证有效性                  |
 | 预览无法加载 | Pre-signed URL 是否过期（默认 1 小时） |
-| 样式不生效 | CSS Layer 顺序、Token 引用是否正确 |
-| i18n 未更新 | I18N 对象键值、`t()` 调用是否正确 |
-| 缓存不刷新 | 传 `bypassCache = true` 参数 |
-| 压缩失败 | 检查文件格式、压缩库是否加载 |
+| 样式不生效   | CSS Layer 顺序、Token 引用是否正确     |
+| i18n 未更新  | I18N 对象键值、`t()` 调用是否正确      |
+| 缓存不刷新   | 传 `bypassCache = true` 参数           |
+| 压缩失败     | 检查文件格式、压缩库是否加载           |
 
 ### 安全注意
 

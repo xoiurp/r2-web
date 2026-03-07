@@ -4,8 +4,8 @@
 
 📁 轻盈优雅的 Web 原生 Cloudflare R2 文件管理器，一切皆在浏览器中完成。
 
-> 本项目被阮一峰大佬在 *[《科技爱好者周刊（第 387 期）》](https://www.ruanyifeng.com/blog/2026/03/weekly-issue-387.html)* 中推荐，在此表示感谢！
-> 
+> 本项目被阮一峰大佬在 _[《科技爱好者周刊（第 387 期）》](https://www.ruanyifeng.com/blog/2026/03/weekly-issue-387.html)_ 中推荐，在此表示感谢！
+>
 > 同时也欢迎大家试用并提出宝贵意见，一起把这个工具做得更好用、更顺手！
 
 ## 在线使用
@@ -58,14 +58,14 @@
 
 ## 功能速览
 
-| 功能类别 | 具体功能 |
-|---------|---------|
-| **文件管理** | 目录浏览、分页加载、懒加载缩略图<br>按名称/日期/大小排序<br>重命名、移动、复制、删除（支持递归） |
+| 功能类别     | 具体功能                                                                                             |
+| ------------ | ---------------------------------------------------------------------------------------------------- |
+| **文件管理** | 目录浏览、分页加载、懒加载缩略图<br>按名称/日期/大小排序<br>重命名、移动、复制、删除（支持递归）     |
 | **文件上传** | 拖拽/粘贴/选择器上传<br>文件名模板（哈希、日期、UUID 等占位符）<br>上传前自动压缩图片（WebAssembly） |
-| **文件预览** | 图片预览（常见格式）<br>视频/音频内嵌播放器<br>文本文件预览（代码高亮） |
-| **链接复制** | URL 直链、Markdown、HTML、预签名 URL |
-| **个性化** | 中文/英语/日语<br>深色模式（跟随系统）<br>配置分享链接/二维码 |
-| **PWA** | 安装到桌面，原生体验 |
+| **文件预览** | 图片预览（常见格式）<br>视频/音频内嵌播放器<br>文本文件预览（代码高亮）                              |
+| **链接复制** | URL 直链、Markdown、HTML、预签名 URL                                                                 |
+| **个性化**   | 中文/英语/日语<br>深色模式（跟随系统）<br>配置分享链接/二维码                                        |
+| **PWA**      | 安装到桌面，原生体验                                                                                 |
 
 ## 快速开始
 
@@ -76,9 +76,9 @@
 ```json
 [
   {
-    "AllowedOrigins": [ "https://r2.viki.moe" ],
-    "AllowedMethods": [ "GET", "POST", "PUT", "DELETE", "HEAD" ],
-    "AllowedHeaders": [ "authorization", "content-type", "x-amz-content-sha256", "x-amz-date", "x-amz-copy-source" ],
+    "AllowedOrigins": ["https://r2.viki.moe"],
+    "AllowedMethods": ["GET", "POST", "PUT", "DELETE", "HEAD"],
+    "AllowedHeaders": ["authorization", "content-type", "x-amz-content-sha256", "x-amz-date", "x-amz-copy-source"],
     "MaxAgeSeconds": 86400
   }
 ]
@@ -127,6 +127,7 @@
 **核心技术：** HTML5/CSS3/ES6+，CSS Layers、原生 `<dialog>`、原生 Fetch、Import Maps、WebAssembly
 
 **依赖库：**
+
 - `aws4fetch` - AWS4 请求签名，处理 R2 S3 API
 - `dayjs` - 日期格式化
 - `@jsquash/*` - WebAssembly 图片压缩（MozJPEG、OxiPNG、libwebp、libavif）

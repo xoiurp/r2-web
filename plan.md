@@ -1,7 +1,5 @@
 ---
-
 在当前目录下，使用纯 HTML 5、CSS 3、ES6+ 实现 cloudflare R2 管理器。
-
 ---
 
 # R2 Web

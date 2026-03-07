@@ -206,8 +206,7 @@ const I18N = {
   en: {
     appTitle: 'R2 Web',
     connectTitle: 'Connect to R2',
-    connectDesc:
-      'Enter your R2 credentials to get started. Everything stays safely in your browser.',
+    connectDesc: 'Enter your R2 credentials to get started. Everything stays safely in your browser.',
     accountId: 'Account ID',
     accessKeyId: 'Access Key ID',
     secretAccessKey: 'Secret Access Key',
@@ -331,8 +330,7 @@ const I18N = {
     refresh: 'Refresh',
     logout: 'Logout',
     logoutConfirmTitle: 'Logout',
-    logoutConfirmMsg:
-      "This will clear your saved credentials. Files in the bucket won't be affected. Continue?",
+    logoutConfirmMsg: "This will clear your saved credentials. Files in the bucket won't be affected. Continue?",
     copying: 'Copying "{name}" to "{destName}"...',
     moving: 'Moving "{name}" to "{destName}"...',
     deleting: 'Deleting "{name}"...',
@@ -343,14 +341,11 @@ const I18N = {
     tooltipSecretAccessKey: 'R2 API Secret Key, stored locally in browser only, never uploaded',
     tooltipBucket: 'R2 Bucket Name, all file operations will be performed in this bucket',
     tooltipCustomDomain: 'Custom Domain (optional), enables one-click public URL copying for files',
-    tooltipFilenameTpl:
-      'Filename template, supports placeholders for auto-generating names and folders',
+    tooltipFilenameTpl: 'Filename template, supports placeholders for auto-generating names and folders',
     filenameTplHintDetailed:
       'Placeholders: [name] [ext] [hash:N] [date:FORMAT] [timestamp] [uuid]\n\nExample 1: [name]_[hash:6].[ext]\nResult: photo_a1b2c3.jpg\n\nExample 2: [date:YYYY-MM-DD]_[name].[ext]\nResult: 2024-03-15_photo.jpg\n\nExample 3: [date:YYYY/MM]/[name].[ext]\nResult: 2024/03/photo.jpg (subdirs in current path)',
-    tooltipCompressMode:
-      'Compress images before upload, supports JPEG/PNG/WebP/AVIF to save storage and bandwidth',
-    tooltipCompressLevel:
-      'Compression quality, Balanced maintains high quality (90%), Extreme saves more space (75%)',
+    tooltipCompressMode: 'Compress images before upload, supports JPEG/PNG/WebP/AVIF to save storage and bandwidth',
+    tooltipCompressLevel: 'Compression quality, Balanced maintains high quality (90%), Extreme saves more space (75%)',
     tooltipTinifyKey: 'Tinify API Key, stored locally, proxied to avoid CORS issues',
     tooltipTheme: 'Choose interface theme: light, dark, or follow system settings automatically',
     tooltipLanguage: 'Switch interface display language, supports Chinese, English, and Japanese',
@@ -431,8 +426,7 @@ const I18N = {
     corsError:
       'CORS がまだ設定されていません。Cloudflare ダッシュボード → R2 → バケット設定で CORS ルールを追加してください。',
     networkError: 'ネットワーク接続に失敗しました: {msg}',
-    http401Error:
-      '認証に失敗しました (401)、Access Key または Secret Key が無効または削除された可能性があります',
+    http401Error: '認証に失敗しました (401)、Access Key または Secret Key が無効または削除された可能性があります',
     http403Error: 'アクセスが拒否されました (403)、API キーの権限を確認してください',
     http404Error: 'バケットが見つかりません (404)、Bucket Name を確認してください',
     uploadSuccess: '{count} 個のファイルをアップロードしました！',
@@ -503,8 +497,7 @@ const I18N = {
     refresh: 'リフレッシュ',
     logout: 'ログアウト',
     logoutConfirmTitle: 'ログアウト',
-    logoutConfirmMsg:
-      '保存された認証情報が削除されます。バケット内のファイルには影響しません。続行しますか？',
+    logoutConfirmMsg: '保存された認証情報が削除されます。バケット内のファイルには影響しません。続行しますか？',
     copying: '"{name}" を "{destName}" にコピーしています...',
     moving: '"{name}" を "{destName}" に移動しています...',
     deleting: '"{name}" を削除しています...',
@@ -512,16 +505,13 @@ const I18N = {
     // Config dialog tooltips
     tooltipAccountId: 'Cloudflare アカウント ID、R2 コンソールの右上で確認できます',
     tooltipAccessKeyId: 'R2 API アクセスキー ID、R2 設定で作成します',
-    tooltipSecretAccessKey:
-      'R2 API シークレットキー、ブラウザにのみ保存され、アップロードされません',
+    tooltipSecretAccessKey: 'R2 API シークレットキー、ブラウザにのみ保存され、アップロードされません',
     tooltipBucket: 'R2 バケット名、すべてのファイル操作はこのバケットで実行されます',
-    tooltipCustomDomain:
-      'カスタムドメイン（任意）、設定後ファイルの公開 URL をワンクリックでコピーできます',
+    tooltipCustomDomain: 'カスタムドメイン（任意）、設定後ファイルの公開 URL をワンクリックでコピーできます',
     tooltipFilenameTpl: 'ファイル名テンプレート、プレースホルダで名前とフォルダ構造を自動生成',
     filenameTplHintDetailed:
       'プレースホルダ: [name] [ext] [hash:N] [date:FORMAT] [timestamp] [uuid]\n\n例1: [name]_[hash:6].[ext]\n結果: photo_a1b2c3.jpg\n\n例2: [date:YYYY-MM-DD]_[name].[ext]\n結果: 2024-03-15_photo.jpg\n\n例3: [date:YYYY/MM]/[name].[ext]\n結果: 2024/03/photo.jpg（現在のディレクトリ配下）',
-    tooltipCompressMode:
-      'アップロード前に画像を圧縮、JPEG/PNG/WebP/AVIF 対応、ストレージと帯域幅を節約',
+    tooltipCompressMode: 'アップロード前に画像を圧縮、JPEG/PNG/WebP/AVIF 対応、ストレージと帯域幅を節約',
     tooltipCompressLevel: '圧縮品質、バランスは高品質を維持（90%）、極限はさらに容量を節約（75%）',
     tooltipTinifyKey: 'Tinify API Key、ローカル保存、CORS 問題を回避するためプロキシ経由',
     tooltipTheme: 'インターフェーステーマを選択：ライト、ダーク、またはシステム設定に自動追従',
@@ -579,16 +569,13 @@ const $ = (sel, ctx = document) => /** @type {*} */ (ctx.querySelector(sel))
 /** @param {string|number|Date} dateStr @returns {string} */
 function formatDate(dateStr) {
   const d = new Date(dateStr)
-  return d.toLocaleDateString(
-    currentLang === 'zh' ? 'zh-CN' : currentLang === 'ja' ? 'ja-JP' : 'en-US',
-    {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-    },
-  )
+  return d.toLocaleDateString(currentLang === 'zh' ? 'zh-CN' : currentLang === 'ja' ? 'ja-JP' : 'en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+  })
 }
 
 /** @param {string} key @returns {string} */
@@ -710,7 +697,7 @@ async function computeFileHash(file) {
   const buffer = await file.arrayBuffer()
   const hashBuffer = await crypto.subtle.digest('SHA-256', buffer)
   return Array.from(new Uint8Array(hashBuffer))
-    .map(b => b.toString(16).padStart(2, '0'))
+    .map((b) => b.toString(16).padStart(2, '0'))
     .join('')
 }
 
@@ -728,13 +715,9 @@ async function applyFilenameTemplate(template, file) {
   result = result.replace(/\[ext\]/g, ext)
   result = result.replace(/\[timestamp\]/g, String(Math.floor(Date.now() / 1000)))
   result = result.replace(/\[uuid\]/g, crypto.randomUUID())
-  result = result.replace(/\[hash:(\d+)\]/g, (_, n) =>
-    fileHash.slice(0, parseInt(/** @type {string} */ (n), 10)),
-  )
+  result = result.replace(/\[hash:(\d+)\]/g, (_, n) => fileHash.slice(0, parseInt(/** @type {string} */ (n), 10)))
   result = result.replace(/\[hash\]/g, fileHash.slice(0, 6))
-  result = result.replace(/\[date:([^\]]+)\]/g, (_, format) =>
-    dayjs().format(/** @type {string} */ (format)),
-  )
+  result = result.replace(/\[date:([^\]]+)\]/g, (_, format) => dayjs().format(/** @type {string} */ (format)))
 
   return result
 }
@@ -874,20 +857,20 @@ class R2Client {
     const doc = new DOMParser().parseFromString(text, 'application/xml')
 
     /** @type {FileItem[]} */
-    const folders = [...doc.querySelectorAll('CommonPrefixes > Prefix')].map(el => ({
+    const folders = [...doc.querySelectorAll('CommonPrefixes > Prefix')].map((el) => ({
       key: el.textContent ?? '',
       isFolder: true,
     }))
 
     /** @type {FileItem[]} */
     const files = [...doc.querySelectorAll('Contents')]
-      .map(el => ({
+      .map((el) => ({
         key: el.querySelector('Key')?.textContent ?? '',
         size: parseInt(el.querySelector('Size')?.textContent ?? '0', 10),
         lastModified: el.querySelector('LastModified')?.textContent ?? '',
         isFolder: false,
       }))
-      .filter(f => f.key !== prefix) // filter out the prefix itself
+      .filter((f) => f.key !== prefix) // filter out the prefix itself
 
     const isTruncated = doc.querySelector('IsTruncated')?.textContent === 'true'
     const nextToken = doc.querySelector('NextContinuationToken')?.textContent || ''
@@ -1013,7 +996,7 @@ class UIManager {
     }
 
     // Listen to system theme changes (when set to auto)
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
       if (localStorage.getItem(THEME_KEY) === 'auto') {
         const apply = () => {
           document.documentElement.setAttribute('data-theme', e.matches ? 'dark' : 'light')
@@ -1075,9 +1058,7 @@ class UIManager {
     }
 
     // Check if there's an open dialog - if so, create/use toast container in dialog's top layer
-    const openDialog = /** @type {HTMLDialogElement | null} */ (
-      document.querySelector('dialog[open]')
-    )
+    const openDialog = /** @type {HTMLDialogElement | null} */ (document.querySelector('dialog[open]'))
 
     let container
     if (openDialog) {
@@ -1212,7 +1193,7 @@ class UIManager {
 
   /** @param {string} title @param {string} label @param {string} [defaultValue] @returns {Promise<string | null>} */
   prompt(title, label, defaultValue = '') {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       const dialog = /** @type {HTMLDialogElement} */ ($('#prompt-dialog'))
       const form = $('#prompt-form')
       const input = /** @type {HTMLInputElement} */ ($('#prompt-input'))
@@ -1224,7 +1205,7 @@ class UIManager {
       let result = null
 
       /** @param {Event} e */
-      const onSubmit = e => {
+      const onSubmit = (e) => {
         e.preventDefault()
         result = input.value.trim() || null
         dialog.close()
@@ -1233,7 +1214,7 @@ class UIManager {
       const onCancel = () => dialog.close()
 
       /** @param {Event} e */
-      const onBackdropClick = e => {
+      const onBackdropClick = (e) => {
         if (e.target === dialog) dialog.close()
       }
 
@@ -1256,7 +1237,7 @@ class UIManager {
 
   /** @param {string} title @param {string} message @returns {Promise<boolean>} */
   confirm(title, message) {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       const dialog = /** @type {HTMLDialogElement} */ ($('#confirm-dialog'))
       const form = $('#confirm-form')
       $('#confirm-title').textContent = title
@@ -1265,7 +1246,7 @@ class UIManager {
       let result = false
 
       /** @param {Event} e */
-      const onSubmit = e => {
+      const onSubmit = (e) => {
         e.preventDefault()
         result = true
         dialog.close()
@@ -1274,7 +1255,7 @@ class UIManager {
       const onCancel = () => dialog.close()
 
       /** @param {Event} e */
-      const onBackdropClick = e => {
+      const onBackdropClick = (e) => {
         if (e.target === dialog) dialog.close()
       }
 
@@ -1336,7 +1317,7 @@ class UIManager {
 
     // Backdrop click handler
     /** @param {Event} e */
-    const onBackdropClick = e => {
+    const onBackdropClick = (e) => {
       if (e.target === dialog) dialog.close()
     }
 
@@ -1397,10 +1378,7 @@ class UIManager {
       }
 
       // Center horizontally, clamp to viewport
-      left = Math.max(
-        GAP,
-        Math.min(left - tipRect.width / 2, window.innerWidth - tipRect.width - GAP),
-      )
+      left = Math.max(GAP, Math.min(left - tipRect.width / 2, window.innerWidth - tipRect.width - GAP))
 
       // Set position with maximum z-index to override any context including dialog top layer
       tip.style.cssText = `position:fixed;left:${left}px;top:${top}px;z-index:2147483647;pointer-events:none`
@@ -1425,7 +1403,7 @@ class UIManager {
 
     // Use event delegation on document for dynamic elements
     // Find closest element with data-tooltip to handle child elements (like SVG)
-    document.addEventListener('mouseover', e => {
+    document.addEventListener('mouseover', (e) => {
       // Support both HTMLElement and SVGElement (for icon buttons with SVG children)
       const eventTarget = e.target
       const target = /** @type {HTMLElement | null} */ (
@@ -1447,7 +1425,7 @@ class UIManager {
       }
     })
 
-    document.addEventListener('mouseout', e => {
+    document.addEventListener('mouseout', (e) => {
       // Support both HTMLElement and SVGElement
       const eventTarget = e.target
       const target = /** @type {HTMLElement | null} */ (
@@ -1459,8 +1437,7 @@ class UIManager {
         const relatedTarget = e.relatedTarget
 
         // Check if we're moving to another tooltip element
-        const movingToTooltip =
-          relatedTarget instanceof Element && relatedTarget.closest('[data-tooltip]')
+        const movingToTooltip = relatedTarget instanceof Element && relatedTarget.closest('[data-tooltip]')
 
         // Check if still within the same tooltip element (moving between children)
         const stillInside = relatedTarget instanceof Node && target.contains(relatedTarget)
@@ -1502,7 +1479,7 @@ class FileExplorer {
     this.#ui = ui
 
     this.#thumbnailObserver = new IntersectionObserver(
-      entries => {
+      (entries) => {
         for (const entry of entries) {
           if (entry.isIntersecting) {
             const card = /** @type {HTMLElement} */ (entry.target)
@@ -1632,7 +1609,7 @@ class FileExplorer {
 
   /** @param {FileItem[]} items @returns {FileItem[]} */
   #sortItems(items) {
-    const { true: folders = [], false: files = [] } = Object.groupBy(items, i => String(i.isFolder))
+    const { true: folders = [], false: files = [] } = Object.groupBy(items, (i) => String(i.isFolder))
 
     /** @type {(a: FileItem, b: FileItem) => number} */
     const byName = (a, b) => getFileName(a.key).localeCompare(getFileName(b.key))
@@ -1640,20 +1617,15 @@ class FileExplorer {
     /** @type {Record<string, (a: FileItem, b: FileItem) => number>} */
     const comparators = {
       name: byName,
-      date: (a, b) =>
-        new Date(a.lastModified ?? 0).getTime() - new Date(b.lastModified ?? 0).getTime(),
+      date: (a, b) => new Date(a.lastModified ?? 0).getTime() - new Date(b.lastModified ?? 0).getTime(),
       size: (a, b) => (a.size ?? 0) - (b.size ?? 0),
     }
 
     const cmp = comparators[this.#sortBy] ?? byName
     const directedCmp =
-      this.#sortOrder === 'asc'
-        ? cmp
-        : (/** @type {FileItem} */ a, /** @type {FileItem} */ b) => cmp(b, a)
+      this.#sortOrder === 'asc' ? cmp : (/** @type {FileItem} */ a, /** @type {FileItem} */ b) => cmp(b, a)
     const directedByName =
-      this.#sortOrder === 'asc'
-        ? byName
-        : (/** @type {FileItem} */ a, /** @type {FileItem} */ b) => byName(b, a)
+      this.#sortOrder === 'asc' ? byName : (/** @type {FileItem} */ a, /** @type {FileItem} */ b) => byName(b, a)
     return [...folders.toSorted(directedByName), ...files.toSorted(directedCmp)]
   }
 
@@ -1909,10 +1881,7 @@ async function compressFile(file, config, onStatus) {
 
       const savings = Math.round((1 - compressedBlob.size / originalSize) * 100)
       if (savings > 0) {
-        onStatus &&
-          onStatus(
-            `Tinify: ${filesize(originalSize)} → ${filesize(compressedBlob.size)} (省 ${savings}%)`,
-          )
+        onStatus && onStatus(`Tinify: ${filesize(originalSize)} → ${filesize(compressedBlob.size)} (省 ${savings}%)`)
       } else {
         onStatus && onStatus(`Tinify: 已优化 (${filesize(compressedBlob.size)})`)
       }
@@ -1945,13 +1914,13 @@ class UploadManager {
     const app = $('#app')
     const dropzone = $('#dropzone')
 
-    app.addEventListener('dragenter', e => {
+    app.addEventListener('dragenter', (e) => {
       e.preventDefault()
       this.#dragCounter++
       dropzone.hidden = false
     })
 
-    app.addEventListener('dragleave', e => {
+    app.addEventListener('dragleave', (e) => {
       e.preventDefault()
       this.#dragCounter--
       if (this.#dragCounter <= 0) {
@@ -1974,7 +1943,7 @@ class UploadManager {
     })
 
     // Ctrl+V / Cmd+V paste upload
-    document.addEventListener('paste', e => {
+    document.addEventListener('paste', (e) => {
       // Ignore paste inside input/textarea/contenteditable
       const target = /** @type {HTMLElement} */ (e.target)
       const tag = target.tagName
@@ -1983,9 +1952,9 @@ class UploadManager {
       const items = [...(e.clipboardData?.items || [])]
       /** @type {File[]} */
       const files = items
-        .filter(item => item.kind === 'file')
-        .map(item => item.getAsFile())
-        .filter(/** @returns {f is File} */ f => f !== null)
+        .filter((item) => item.kind === 'file')
+        .map((item) => item.getAsFile())
+        .filter(/** @returns {f is File} */ (f) => f !== null)
 
       if (files.length > 0) {
         e.preventDefault()
@@ -2039,7 +2008,7 @@ class UploadManager {
       body.appendChild(item)
 
       // Compress file first (if enabled) — hash should be based on compressed content
-      const updateStatus = /** @param {string} msg */ msg => {
+      const updateStatus = /** @param {string} msg */ (msg) => {
         const statusEl = $(`#${id}-status`)
         if (statusEl) statusEl.textContent = msg
       }
@@ -2056,14 +2025,14 @@ class UploadManager {
     // Upload concurrently with progress tracking
     let completed = 0
     const results = await Promise.allSettled(
-      uploads.map(u =>
+      uploads.map((u) =>
         this.#uploadSingleFile(u.id, u.key, u.file, u.contentType).then(
-          result => {
+          (result) => {
             completed++
             title.textContent = `${t('uploadProgress')} ${completed}/${uploads.length}`
             return result
           },
-          error => {
+          (error) => {
             completed++
             title.textContent = `${t('uploadProgress')} ${completed}/${uploads.length}`
             throw error
@@ -2072,8 +2041,8 @@ class UploadManager {
       ),
     )
 
-    const success = results.filter(r => r.status === 'fulfilled').length
-    const fail = results.filter(r => r.status === 'rejected').length
+    const success = results.filter((r) => r.status === 'fulfilled').length
+    const fail = results.filter((r) => r.status === 'rejected').length
 
     if (fail === 0) {
       this.#ui.toast(t('uploadSuccess', { count: success }), 'success')
@@ -2191,9 +2160,7 @@ class FilePreview {
   async downloadCurrent() {
     if (!this.#currentKey) return
     try {
-      const url =
-        this.#r2.getPublicUrl(this.#currentKey) ??
-        (await this.#r2.getPresignedUrl(this.#currentKey))
+      const url = this.#r2.getPublicUrl(this.#currentKey) ?? (await this.#r2.getPresignedUrl(this.#currentKey))
       const a = document.createElement('a')
       a.href = url
       a.download = getFileName(this.#currentKey)
@@ -2269,11 +2236,7 @@ class FileOperations {
   async copy(key, isFolder) {
     const name = getFileName(key)
     const currentPrefix = this.#explorer.currentPrefix
-    const dest = await this.#ui.prompt(
-      t('copyTitle'),
-      t('copyLabel'),
-      currentPrefix + name + (isFolder ? '/' : ''),
-    )
+    const dest = await this.#ui.prompt(t('copyTitle'), t('copyLabel'), currentPrefix + name + (isFolder ? '/' : ''))
     if (!dest) return
 
     try {
@@ -2308,11 +2271,7 @@ class FileOperations {
   async move(key, isFolder) {
     const name = getFileName(key)
     const currentPrefix = this.#explorer.currentPrefix
-    const dest = await this.#ui.prompt(
-      t('moveTitle'),
-      t('moveLabel'),
-      currentPrefix + name + (isFolder ? '/' : ''),
-    )
+    const dest = await this.#ui.prompt(t('moveTitle'), t('moveLabel'), currentPrefix + name + (isFolder ? '/' : ''))
     if (!dest) return
 
     try {
@@ -2358,7 +2317,7 @@ class FileOperations {
       if (isFolder) {
         await this.#recursiveOperation(
           key,
-          async srcKey => {
+          async (srcKey) => {
             await this.#r2.deleteObject(srcKey)
           },
           false,
@@ -2443,14 +2402,14 @@ class FileOperations {
     // Process in batches of 5
     for (let i = 0; i < allKeys.length; i += 5) {
       const batch = allKeys.slice(i, i + 5)
-      await Promise.all(batch.map(k => operation(k)))
+      await Promise.all(batch.map((k) => operation(k)))
     }
 
     // Delete source objects if needed
     if (deleteSource) {
       for (let i = 0; i < allKeys.length; i += 5) {
         const batch = allKeys.slice(i, i + 5)
-        await Promise.all(batch.map(k => this.#r2.deleteObject(k)))
+        await Promise.all(batch.map((k) => this.#r2.deleteObject(k)))
       }
       // Delete the folder marker
       try {
@@ -2823,29 +2782,25 @@ class App {
     const dialog = /** @type {HTMLDialogElement} */ ($('#config-dialog'))
 
     // Tab switching logic
-    const tabButtons = /** @type {NodeListOf<HTMLButtonElement>} */ (
-      dialog.querySelectorAll('.config-tab-btn')
-    )
-    const tabPanels = /** @type {NodeListOf<HTMLElement>} */ (
-      dialog.querySelectorAll('.config-tab-panel')
-    )
+    const tabButtons = /** @type {NodeListOf<HTMLButtonElement>} */ (dialog.querySelectorAll('.config-tab-btn'))
+    const tabPanels = /** @type {NodeListOf<HTMLElement>} */ (dialog.querySelectorAll('.config-tab-panel'))
 
     /**
      * Switch Tab
      * @param {string} tabId - Tab ID
      */
-    const switchTab = tabId => {
-      tabButtons.forEach(btn => {
+    const switchTab = (tabId) => {
+      tabButtons.forEach((btn) => {
         const isActive = btn.dataset.tab === tabId
         btn.setAttribute('aria-selected', String(isActive))
       })
-      tabPanels.forEach(panel => {
+      tabPanels.forEach((panel) => {
         panel.hidden = panel.dataset.panel !== tabId
       })
     }
 
     // Bind tab button click events
-    tabButtons.forEach(btn => {
+    tabButtons.forEach((btn) => {
       btn.addEventListener('click', () => {
         const tabId = btn.dataset.tab
         if (tabId) switchTab(tabId)
@@ -2966,7 +2921,7 @@ class App {
     }
 
     // Prevent tab panel forms from submitting (they're only for data collection)
-    dialog.querySelectorAll('form.config-tab-panel').forEach(form => {
+    dialog.querySelectorAll('form.config-tab-panel').forEach((form) => {
       const formElement = /** @type {HTMLFormElement} */ (form)
       formElement.onsubmit = (/** @type {Event} */ e) => e.preventDefault()
     })
@@ -2998,14 +2953,14 @@ class App {
     })
 
     // Dismiss context menu
-    document.addEventListener('click', e => {
+    document.addEventListener('click', (e) => {
       const target = /** @type {HTMLElement} */ (e.target)
       if (!target.closest('.context-menu') && !target.closest('.file-card-menu')) {
         this.#ui.hideContextMenu(true) // instant close when clicking outside
       }
     })
 
-    document.addEventListener('keydown', e => {
+    document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
         this.#ui.hideContextMenu()
       }
@@ -3022,17 +2977,15 @@ class App {
     })
 
     // Breadcrumb clicks
-    $('#breadcrumb').addEventListener('click', e => {
-      const btn = /** @type {HTMLElement | null} */ (
-        /** @type {HTMLElement} */ (e.target).closest('.breadcrumb-btn')
-      )
+    $('#breadcrumb').addEventListener('click', (e) => {
+      const btn = /** @type {HTMLElement | null} */ (/** @type {HTMLElement} */ (e.target).closest('.breadcrumb-btn'))
       if (btn) {
         /** @type {FileExplorer} */ this.#explorer.navigate(btn.dataset.prefix ?? '')
       }
     })
 
     // File grid clicks
-    $('#file-grid').addEventListener('click', e => {
+    $('#file-grid').addEventListener('click', (e) => {
       const target = /** @type {HTMLElement} */ (e.target)
       // Menu button
       const menuBtn = /** @type {HTMLElement | null} */ (target.closest('.file-card-menu'))
@@ -3040,16 +2993,10 @@ class App {
         e.stopPropagation()
         const card = /** @type {HTMLElement} */ (menuBtn.closest('.file-card'))
         const rect = menuBtn.getBoundingClientRect()
-        this.#ui.showContextMenu(
-          rect.right,
-          rect.bottom,
-          card.dataset.key ?? '',
-          card.dataset.isFolder === 'true',
-          {
-            size: Number(card.dataset.size ?? 0),
-            mod: Number(card.dataset.mod ?? 0),
-          },
-        )
+        this.#ui.showContextMenu(rect.right, rect.bottom, card.dataset.key ?? '', card.dataset.isFolder === 'true', {
+          size: Number(card.dataset.size ?? 0),
+          mod: Number(card.dataset.mod ?? 0),
+        })
         return
       }
 
@@ -3069,27 +3016,19 @@ class App {
     })
 
     // Right-click context menu
-    $('#file-grid').addEventListener('contextmenu', e => {
-      const card = /** @type {HTMLElement | null} */ (
-        /** @type {HTMLElement} */ (e.target).closest('.file-card')
-      )
+    $('#file-grid').addEventListener('contextmenu', (e) => {
+      const card = /** @type {HTMLElement | null} */ (/** @type {HTMLElement} */ (e.target).closest('.file-card'))
       if (card) {
         e.preventDefault()
-        this.#ui.showContextMenu(
-          e.clientX,
-          e.clientY,
-          card.dataset.key ?? '',
-          card.dataset.isFolder === 'true',
-          {
-            size: Number(card.dataset.size ?? 0),
-            mod: Number(card.dataset.mod ?? 0),
-          },
-        )
+        this.#ui.showContextMenu(e.clientX, e.clientY, card.dataset.key ?? '', card.dataset.isFolder === 'true', {
+          size: Number(card.dataset.size ?? 0),
+          mod: Number(card.dataset.mod ?? 0),
+        })
       }
     })
 
     // Context menu actions
-    $('#context-menu').addEventListener('click', e => {
+    $('#context-menu').addEventListener('click', (e) => {
       const item = /** @type {HTMLElement | null} */ (
         /** @type {HTMLElement} */ (e.target).closest('.context-menu-item')
       )
@@ -3175,19 +3114,15 @@ class App {
     })
 
     // Load more
-    $('#load-more-btn').addEventListener('click', () =>
-      /** @type {FileExplorer} */ (this.#explorer).loadMore(),
-    )
+    $('#load-more-btn').addEventListener('click', () => /** @type {FileExplorer} */ (this.#explorer).loadMore())
 
     // Preview close
     const previewDialog = /** @type {HTMLDialogElement} */ ($('#preview-dialog'))
     $('#preview-close').addEventListener('click', () => previewDialog.close())
-    previewDialog.addEventListener('click', e => {
+    previewDialog.addEventListener('click', (e) => {
       if (e.target === previewDialog) previewDialog.close()
     })
-    $('#preview-download').addEventListener('click', () =>
-      /** @type {FilePreview} */ (this.#preview).downloadCurrent(),
-    )
+    $('#preview-download').addEventListener('click', () => /** @type {FilePreview} */ (this.#preview).downloadCurrent())
 
     // Upload panel close
     $('#upload-panel-close').addEventListener('click', () => {

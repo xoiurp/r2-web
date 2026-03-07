@@ -44,6 +44,8 @@ const I18N = {
     emptyFolder: '这里空空的什么也没有，上传点什么吧',
     uploadFiles: '上传文件',
     loadMore: '加载更多',
+    itemsPartial: '已加载 {count} 项',
+    itemsTotal: '共 {count} 项',
     preview: '预览',
     download: '下载',
     rename: '重命名',
@@ -256,6 +258,8 @@ const I18N = {
     emptyFolder: '这里空空的什么也没有，上传点什么吧',
     uploadFiles: '上传文件',
     loadMore: '加载更多',
+    itemsPartial: '已加载 {count} 项',
+    itemsTotal: '共 {count} 项',
     preview: '预览',
     download: '下载',
     rename: '重命名',
@@ -428,8 +432,7 @@ const I18N = {
   en: {
     appTitle: 'R2 Web',
     connectTitle: 'Connect to R2',
-    connectDesc:
-      'Enter your R2 credentials to get started. Everything stays safely in your browser.',
+    connectDesc: 'Enter your R2 credentials to get started. Everything stays safely in your browser.',
     accountId: 'Account ID',
     accessKeyId: 'Access Key ID',
     secretAccessKey: 'Secret Access Key',
@@ -443,8 +446,7 @@ const I18N = {
     filenameTplPathTitle: 'Choose Path',
     filenameTplPathDesc:
       'You are not at the root (/), and the template output contains subfolders. Please confirm the upload path.',
-    filenameTplPathDescWithTpl:
-      'Current directory: {prefix}, template: {template}. Please confirm the upload path.',
+    filenameTplPathDescWithTpl: 'Current directory: {prefix}, template: {template}. Please confirm the upload path.',
     cancel: 'Cancel',
     connect: 'Connect',
     newFolder: 'New Folder',
@@ -454,8 +456,7 @@ const I18N = {
     uploadHint: 'Drag, paste, or click to upload',
     dropInvalidHint: 'No uploadable files detected. Please drag directly from your file manager.',
     pasteHint: 'Paste files to current directory',
-    pasteMixedNotSupported:
-      'Mixed text and images are not supported. Please paste only text or images.',
+    pasteMixedNotSupported: 'Mixed text and images are not supported. Please paste only text or images.',
     pasteTextConfirmTitle: 'Paste Text Upload',
     pasteTextConfirmMsg: 'Text detected. Upload as a TXT file?',
     pasteTextPathTitle: 'Upload Path',
@@ -472,6 +473,8 @@ const I18N = {
     emptyFolder: 'Nothing here yet — upload something!',
     uploadFiles: 'Upload Files',
     loadMore: 'Load More',
+    itemsPartial: '{count} items loaded',
+    itemsTotal: '{count} items',
     preview: 'Preview',
     download: 'Download',
     rename: 'Rename',
@@ -601,8 +604,7 @@ const I18N = {
     refresh: 'Refresh',
     logout: 'Logout',
     logoutConfirmTitle: 'Logout',
-    logoutConfirmMsg:
-      "This will clear your saved credentials. Files in the bucket won't be affected. Continue?",
+    logoutConfirmMsg: "This will clear your saved credentials. Files in the bucket won't be affected. Continue?",
     copying: 'Copying "{name}" to "{destName}"...',
     moving: 'Moving "{name}" to "{destName}"...',
     deleting: 'Deleting "{name}"...',
@@ -613,15 +615,12 @@ const I18N = {
     tooltipSecretAccessKey: 'R2 API Secret Key, stored locally in browser only, never uploaded',
     tooltipBucket: 'R2 Bucket Name, all file operations will be performed in this bucket',
     tooltipCustomDomain: 'Custom Domain (optional), enables one-click public URL copying for files',
-    tooltipFilenameTpl:
-      'Filename template, supports placeholders for auto-generating names and folders',
+    tooltipFilenameTpl: 'Filename template, supports placeholders for auto-generating names and folders',
     tooltipFilenameTplScope: 'Choose template scope; default is images only',
     filenameTplHintDetailed:
       'Placeholders: [name] [ext] [hash:N] [date:FORMAT] [timestamp] [uuid]\n\nExample 1: [name]_[hash:6].[ext]\nResult: photo_a1b2c3.jpg\n\nExample 2: [date:YYYY-MM-DD]_[name].[ext]\nResult: 2024-03-15_photo.jpg\n\nExample 3: [date:YYYY/MM]/[name].[ext]\nResult: 2024/03/photo.jpg (when not at root, you will be asked to confirm the upload path)',
-    tooltipCompressMode:
-      'Compress images before upload, supports JPEG/PNG/WebP/AVIF to save storage and bandwidth',
-    tooltipCompressLevel:
-      'Compression quality, Balanced maintains high quality (90%), Extreme saves more space (75%)',
+    tooltipCompressMode: 'Compress images before upload, supports JPEG/PNG/WebP/AVIF to save storage and bandwidth',
+    tooltipCompressLevel: 'Compression quality, Balanced maintains high quality (90%), Extreme saves more space (75%)',
     tooltipTinifyKey: 'Tinify API Key, stored locally, proxied to avoid CORS issues',
     tooltipTheme: 'Choose interface theme: light, dark, or follow system settings automatically',
     tooltipLanguage: 'Switch interface display language, supports Chinese, English, and Japanese',
@@ -687,14 +686,15 @@ const I18N = {
     pasteFilePathTitle: 'アップロード先',
     pasteFilePathLabel: '保存パス',
     pasteFilesConfirmTitle: 'ファイルをアップロード',
-    pasteFilesConfirmMsg:
-      '{count} 個のファイルを検出しました。現在のディレクトリにアップロードしますか？',
+    pasteFilesConfirmMsg: '{count} 個のファイルを検出しました。現在のディレクトリにアップロードしますか？',
     uploading: 'アップロード中...',
     uploadProgress: 'アップロード進行状況',
     root: 'ルート',
     emptyFolder: 'まだ何もありません — アップロードしてみましょう',
     uploadFiles: 'ファイルをアップロード',
     loadMore: 'もっと読み込む',
+    itemsPartial: '{count} 件を読み込み済み',
+    itemsTotal: '合計 {count} 件',
     preview: 'プレビュー',
     download: 'ダウンロード',
     rename: '名前変更',
@@ -746,8 +746,7 @@ const I18N = {
     corsError:
       'CORS がまだ設定されていません。Cloudflare ダッシュボード → R2 → バケット設定で CORS ルールを追加してください。',
     networkError: 'ネットワーク接続に失敗しました: {msg}',
-    http401Error:
-      '認証に失敗しました (401)、Access Key または Secret Key が無効または削除された可能性があります',
+    http401Error: '認証に失敗しました (401)、Access Key または Secret Key が無効または削除された可能性があります',
     http403Error: 'アクセスが拒否されました (403)、API キーの権限を確認してください',
     http404Error: 'バケットが見つかりません (404)、Bucket Name を確認してください',
     uploadSuccess: '{count} 個のファイルをアップロードしました！',
@@ -825,8 +824,7 @@ const I18N = {
     refresh: 'リフレッシュ',
     logout: 'ログアウト',
     logoutConfirmTitle: 'ログアウト',
-    logoutConfirmMsg:
-      '保存された認証情報が削除されます。バケット内のファイルには影響しません。続行しますか？',
+    logoutConfirmMsg: '保存された認証情報が削除されます。バケット内のファイルには影響しません。続行しますか？',
     copying: '"{name}" を "{destName}" にコピーしています...',
     moving: '"{name}" を "{destName}" に移動しています...',
     deleting: '"{name}" を削除しています...',
@@ -834,17 +832,14 @@ const I18N = {
     // Config dialog tooltips
     tooltipAccountId: 'Cloudflare アカウント ID、R2 コンソールの右上で確認できます',
     tooltipAccessKeyId: 'R2 API アクセスキー ID、R2 設定で作成します',
-    tooltipSecretAccessKey:
-      'R2 API シークレットキー、ブラウザにのみ保存され、アップロードされません',
+    tooltipSecretAccessKey: 'R2 API シークレットキー、ブラウザにのみ保存され、アップロードされません',
     tooltipBucket: 'R2 バケット名、すべてのファイル操作はこのバケットで実行されます',
-    tooltipCustomDomain:
-      'カスタムドメイン（任意）、設定後ファイルの公開 URL をワンクリックでコピーできます',
+    tooltipCustomDomain: 'カスタムドメイン（任意）、設定後ファイルの公開 URL をワンクリックでコピーできます',
     tooltipFilenameTpl: 'ファイル名テンプレート、プレースホルダで名前とフォルダ構造を自動生成',
     tooltipFilenameTplScope: 'テンプレートの適用範囲を選択（既定は画像のみ）',
     filenameTplHintDetailed:
       'プレースホルダ: [name] [ext] [hash:N] [date:FORMAT] [timestamp] [uuid]\n\n例1: [name]_[hash:6].[ext]\n結果: photo_a1b2c3.jpg\n\n例2: [date:YYYY-MM-DD]_[name].[ext]\n結果: 2024-03-15_photo.jpg\n\n例3: [date:YYYY/MM]/[name].[ext]\n結果: 2024/03/photo.jpg（ルート以外ではアップロード先の確認があります）',
-    tooltipCompressMode:
-      'アップロード前に画像を圧縮、JPEG/PNG/WebP/AVIF 対応、ストレージと帯域幅を節約',
+    tooltipCompressMode: 'アップロード前に画像を圧縮、JPEG/PNG/WebP/AVIF 対応、ストレージと帯域幅を節約',
     tooltipCompressLevel: '圧縮品質、バランスは高品質を維持（90%）、極限はさらに容量を節約（75%）',
     tooltipTinifyKey: 'Tinify API Key、ローカル保存、CORS 問題を回避するためプロキシ経由',
     tooltipTheme: 'インターフェーステーマを選択：ライト、ダーク、またはシステム設定に自動追従',

@@ -14,7 +14,7 @@ class UIManager {
       document.documentElement.setAttribute('data-theme', saved)
     }
 
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
       if (localStorage.getItem(THEME_KEY) === 'auto') {
         const apply = () => {
           document.documentElement.setAttribute('data-theme', e.matches ? 'dark' : 'light')
@@ -75,9 +75,7 @@ class UIManager {
       info: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>',
     }
 
-    const openDialog = /** @type {HTMLDialogElement | null} */ (
-      document.querySelector('dialog[open]')
-    )
+    const openDialog = /** @type {HTMLDialogElement | null} */ (document.querySelector('dialog[open]'))
 
     let container
     if (openDialog) {
@@ -219,7 +217,7 @@ class UIManager {
    * @returns {Promise<string | null>}
    */
   prompt(title, label, defaultValue = '', { validate, hint, preview } = {}) {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       const dialog = /** @type {HTMLDialogElement} */ ($('#prompt-dialog'))
       const form = $('#prompt-form')
       const input = /** @type {HTMLInputElement} */ ($('#prompt-input'))
@@ -235,7 +233,10 @@ class UIManager {
       hintEl.hidden = !hint
 
       const updatePreview = () => {
-        if (!preview) { previewEl.hidden = true; return }
+        if (!preview) {
+          previewEl.hidden = true
+          return
+        }
         previewEl.textContent = preview(input.value)
         previewEl.hidden = false
       }
@@ -253,12 +254,18 @@ class UIManager {
         return !err
       }
 
-      const onInput = () => { checkValid(); updatePreview() }
+      const onInput = () => {
+        checkValid()
+        updatePreview()
+      }
 
       /** @param {Event} e */
-      const onSubmit = e => {
+      const onSubmit = (e) => {
         e.preventDefault()
-        if (!checkValid()) { input.focus(); return }
+        if (!checkValid()) {
+          input.focus()
+          return
+        }
         result = input.value.trim() || null
         dialog.close()
       }
@@ -266,7 +273,7 @@ class UIManager {
       const onCancel = () => dialog.close()
 
       /** @param {Event} e */
-      const onBackdropClick = e => {
+      const onBackdropClick = (e) => {
         if (e.target === dialog) dialog.close()
       }
 
@@ -292,7 +299,7 @@ class UIManager {
 
   /** @param {string} title @param {string} message @returns {Promise<boolean>} */
   confirm(title, message) {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       const dialog = /** @type {HTMLDialogElement} */ ($('#confirm-dialog'))
       const form = $('#confirm-form')
       $('#confirm-title').textContent = title
@@ -301,7 +308,7 @@ class UIManager {
       let result = false
 
       /** @param {Event} e */
-      const onSubmit = e => {
+      const onSubmit = (e) => {
         e.preventDefault()
         result = true
         dialog.close()
@@ -310,7 +317,7 @@ class UIManager {
       const onCancel = () => dialog.close()
 
       /** @param {Event} e */
-      const onBackdropClick = e => {
+      const onBackdropClick = (e) => {
         if (e.target === dialog) dialog.close()
       }
 
@@ -336,7 +343,7 @@ class UIManager {
    * @returns {Promise<'overwrite' | 'skip' | 'overwrite-all' | 'skip-all'>}
    */
   confirmOverwrite(name, showApplyAll = false) {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       const dialog = /** @type {HTMLDialogElement} */ ($('#overwrite-dialog'))
       $('#overwrite-title').textContent = t('overwriteTitle')
       $('#overwrite-message').textContent = t('overwriteMsg', { name })
@@ -350,13 +357,27 @@ class UIManager {
       /** @type {'overwrite' | 'skip' | 'overwrite-all' | 'skip-all'} */
       let result = 'skip'
 
-      const onSkip = () => { result = 'skip'; dialog.close() }
-      const onSkipAll = () => { result = 'skip-all'; dialog.close() }
-      const onOverwrite = () => { result = 'overwrite'; dialog.close() }
-      const onOverwriteAll = () => { result = 'overwrite-all'; dialog.close() }
+      const onSkip = () => {
+        result = 'skip'
+        dialog.close()
+      }
+      const onSkipAll = () => {
+        result = 'skip-all'
+        dialog.close()
+      }
+      const onOverwrite = () => {
+        result = 'overwrite'
+        dialog.close()
+      }
+      const onOverwriteAll = () => {
+        result = 'overwrite-all'
+        dialog.close()
+      }
 
       /** @param {Event} e */
-      const onBackdropClick = e => { if (e.target === dialog) dialog.close() }
+      const onBackdropClick = (e) => {
+        if (e.target === dialog) dialog.close()
+      }
 
       const onClose = () => {
         $('#overwrite-skip').removeEventListener('click', onSkip)
@@ -413,7 +434,7 @@ class UIManager {
     const onClose = () => dialog.close()
 
     /** @param {Event} e */
-    const onBackdropClick = e => {
+    const onBackdropClick = (e) => {
       if (e.target === dialog) dialog.close()
     }
 
@@ -470,7 +491,7 @@ class UIManager {
     const onClose = () => dialog.close()
 
     /** @param {Event} e */
-    const onBackdropClick = e => {
+    const onBackdropClick = (e) => {
       if (e.target === dialog) dialog.close()
     }
 
@@ -496,18 +517,16 @@ class UIManager {
    * @returns {Promise<'template'|'prefix-template'|'prefix-basename'|null>}
    */
   chooseFilenameTemplatePath(currentPrefix, processedName, template) {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       const dialog = /** @type {HTMLDialogElement} */ ($('#filename-path-dialog'))
       const form = $('#filename-path-form')
       const optionTemplate = $('#filename-path-option-template')
       const optionPrefixTemplate = $('#filename-path-option-prefix-template')
       const optionPrefixBasename = $('#filename-path-option-prefix-basename')
-      const choicePrefixTemplate = /** @type {HTMLInputElement} */ (
-        $('#filename-path-choice-prefix-template')
-      )
+      const choicePrefixTemplate = /** @type {HTMLInputElement} */ ($('#filename-path-choice-prefix-template'))
 
       /** @param {string} str */
-      const trimSlashes = str => str.replace(/^\/+|\/+$/g, '')
+      const trimSlashes = (str) => str.replace(/^\/+|\/+$/g, '')
       const prefixClean = trimSlashes(currentPrefix)
       const nameClean = processedName.replace(/^\/+/, '')
       const baseName = extractFileName(processedName).replace(/^\/+/, '')
@@ -533,7 +552,7 @@ class UIManager {
       let result = null
 
       /** @param {Event} e */
-      const onSubmit = e => {
+      const onSubmit = (e) => {
         e.preventDefault()
         const selected = dialog.querySelector('input[name=\"filenamePathChoice\"]:checked')
         result = /** @type {any} */ (selected)?.value || 'prefix-template'
@@ -543,7 +562,7 @@ class UIManager {
       const onCancel = () => dialog.close()
 
       /** @param {Event} e */
-      const onBackdropClick = e => {
+      const onBackdropClick = (e) => {
         if (e.target === dialog) dialog.close()
       }
 
@@ -597,10 +616,7 @@ class UIManager {
         top = rect.top - GAP - tipRect.height
       }
 
-      left = Math.max(
-        GAP,
-        Math.min(left - tipRect.width / 2, window.innerWidth - tipRect.width - GAP),
-      )
+      left = Math.max(GAP, Math.min(left - tipRect.width / 2, window.innerWidth - tipRect.width - GAP))
 
       tip.style.cssText = `position:fixed;left:${left}px;top:${top}px;z-index:2147483647;pointer-events:none`
       tip.offsetHeight
@@ -620,7 +636,7 @@ class UIManager {
       }
     }
 
-    document.addEventListener('mouseover', e => {
+    document.addEventListener('mouseover', (e) => {
       const eventTarget = e.target
       const target = /** @type {HTMLElement | null} */ (
         eventTarget instanceof Element ? eventTarget.closest('[data-tooltip]') : null
@@ -638,7 +654,7 @@ class UIManager {
       }
     })
 
-    document.addEventListener('mouseout', e => {
+    document.addEventListener('mouseout', (e) => {
       const eventTarget = e.target
       const target = /** @type {HTMLElement | null} */ (
         eventTarget instanceof Element ? eventTarget.closest('[data-tooltip]') : null
@@ -647,8 +663,7 @@ class UIManager {
       if (target === currentTarget && target) {
         const relatedTarget = e.relatedTarget
 
-        const movingToTooltip =
-          relatedTarget instanceof Element && relatedTarget.closest('[data-tooltip]')
+        const movingToTooltip = relatedTarget instanceof Element && relatedTarget.closest('[data-tooltip]')
 
         const stillInside = relatedTarget instanceof Node && target.contains(relatedTarget)
 

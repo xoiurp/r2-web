@@ -179,6 +179,81 @@ class R2Client {
     }
   }
 
+  // =============================================
+  // Multipart Upload
+  // =============================================
+
+  /**
+   * Initiate a multipart upload
+   * @param {string} key
+   * @param {string} contentType
+   * @returns {Promise<string>} uploadId
+   */
+  async initiateMultipartUpload(key, contentType) {
+    const url = `${/** @type {ConfigManager} */ (this.#config).getBucketUrl()}/${encodeS3Key(key)}?uploads`
+    const res = await /** @type {AwsClient} */ (this.#client).fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': contentType },
+    })
+    if (!res.ok) throw new Error(`InitiateMultipartUpload failed: HTTP ${res.status}`)
+    const text = await res.text()
+    const doc = new DOMParser().parseFromString(text, 'application/xml')
+    const uploadId = doc.querySelector('UploadId')?.textContent
+    if (!uploadId) throw new Error('No UploadId in response')
+    return uploadId
+  }
+
+  /**
+   * Upload a single part
+   * @param {string} key
+   * @param {string} uploadId
+   * @param {number} partNumber
+   * @param {Blob} body
+   * @returns {Promise<string>} ETag
+   */
+  async uploadPart(key, uploadId, partNumber, body) {
+    const url = `${/** @type {ConfigManager} */ (this.#config).getBucketUrl()}/${encodeS3Key(key)}?partNumber=${partNumber}&uploadId=${encodeURIComponent(uploadId)}`
+    const res = await /** @type {AwsClient} */ (this.#client).fetch(url, {
+      method: 'PUT',
+      body,
+    })
+    if (!res.ok) throw new Error(`UploadPart ${partNumber} failed: HTTP ${res.status}`)
+    const etag = res.headers.get('etag')
+    if (!etag) throw new Error(`No ETag for part ${partNumber}`)
+    return etag
+  }
+
+  /**
+   * Complete multipart upload
+   * @param {string} key
+   * @param {string} uploadId
+   * @param {{ partNumber: number; etag: string }[]} parts
+   */
+  async completeMultipartUpload(key, uploadId, parts) {
+    const url = `${/** @type {ConfigManager} */ (this.#config).getBucketUrl()}/${encodeS3Key(key)}?uploadId=${encodeURIComponent(uploadId)}`
+    const xmlParts = parts
+      .map((p) => `<Part><PartNumber>${p.partNumber}</PartNumber><ETag>${p.etag}</ETag></Part>`)
+      .join('')
+    const body = `<CompleteMultipartUpload>${xmlParts}</CompleteMultipartUpload>`
+
+    const res = await /** @type {AwsClient} */ (this.#client).fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/xml' },
+      body,
+    })
+    if (!res.ok) throw new Error(`CompleteMultipartUpload failed: HTTP ${res.status}`)
+  }
+
+  /**
+   * Abort a multipart upload
+   * @param {string} key
+   * @param {string} uploadId
+   */
+  async abortMultipartUpload(key, uploadId) {
+    const url = `${/** @type {ConfigManager} */ (this.#config).getBucketUrl()}/${encodeS3Key(key)}?uploadId=${encodeURIComponent(uploadId)}`
+    await /** @type {AwsClient} */ (this.#client).fetch(url, { method: 'DELETE' })
+  }
+
   /** @param {string} prefix */
   async createFolder(prefix) {
     const key = prefix.endsWith('/') ? prefix : prefix + '/'

@@ -4,7 +4,7 @@ import { encode as encodeWebp } from '@jsquash/webp'
 import { encode as encodeAvif } from '@jsquash/avif'
 import dayjs from 'dayjs'
 import { filesize } from 'filesize'
-import { COMPRESSIBLE_IMAGE_RE, IMAGE_RE, MAX_UPLOAD_SIZE } from './constants.js'
+import { COMPRESSIBLE_IMAGE_RE, IMAGE_RE, MAX_UPLOAD_SIZE, MULTIPART_THRESHOLD, MULTIPART_PART_SIZE, MAX_MULTIPART_SIZE } from './constants.js'
 import { t } from './i18n.js'
 import { ConfigManager } from './config-manager.js'
 import { FileExplorer } from './file-explorer.js'
@@ -341,7 +341,7 @@ class UploadManager {
     for (let i = 0; i < files.length; i++) {
       let file = files[i]
 
-      if (file.size > MAX_UPLOAD_SIZE) {
+      if (file.size > MAX_MULTIPART_SIZE) {
         this.#ui.toast(t('fileTooLarge', { name: file.name }), 'error')
         continue
       }
@@ -476,6 +476,10 @@ class UploadManager {
 
   /** @param {string} id @param {string} key @param {File} file @param {string} contentType */
   async #uploadSingleFile(id, key, file, contentType) {
+    if (file.size >= MULTIPART_THRESHOLD) {
+      return this.#uploadMultipart(id, key, file, contentType)
+    }
+
     const signed = await this.#r2.putObjectSigned(key, contentType)
     const bar = $(`#${id}-bar`)
 
@@ -502,6 +506,88 @@ class UploadManager {
     if (bar) {
       bar.classList.add('done')
       bar.style.width = '100%'
+    }
+  }
+
+  /**
+   * Upload large file using S3 Multipart Upload
+   * @param {string} id - Upload item DOM id
+   * @param {string} key - S3 key
+   * @param {File} file - File to upload
+   * @param {string} contentType - MIME type
+   */
+  async #uploadMultipart(id, key, file, contentType) {
+    const bar = $(`#${id}-bar`)
+    const statusEl = $(`#${id}-status`)
+
+    const totalParts = Math.ceil(file.size / MULTIPART_PART_SIZE)
+    const fileSizeMB = (file.size / (1024 * 1024)).toFixed(0)
+
+    if (statusEl) statusEl.textContent = `Multipart: 0/${totalParts} (${fileSizeMB} MB)`
+    if (bar) bar.style.width = '0%'
+
+    // 1. Initiate
+    let uploadId
+    try {
+      uploadId = await this.#r2.initiateMultipartUpload(key, contentType)
+    } catch (e) {
+      if (bar) bar.classList.add('error')
+      throw e
+    }
+
+    // 2. Upload parts
+    /** @type {{ partNumber: number; etag: string }[]} */
+    const completedParts = []
+    const MAX_CONCURRENT = 3
+
+    try {
+      for (let startIdx = 0; startIdx < totalParts; startIdx += MAX_CONCURRENT) {
+        const batch = []
+        for (let j = 0; j < MAX_CONCURRENT && startIdx + j < totalParts; j++) {
+          const partNum = startIdx + j + 1
+          const start = (partNum - 1) * MULTIPART_PART_SIZE
+          const end = Math.min(start + MULTIPART_PART_SIZE, file.size)
+          const blob = file.slice(start, end)
+
+          batch.push(
+            this.#r2.uploadPart(key, uploadId, partNum, blob).then((etag) => ({
+              partNumber: partNum,
+              etag,
+            }))
+          )
+        }
+
+        const results = await Promise.all(batch)
+        completedParts.push(...results)
+
+        // Update progress
+        const progress = Math.round((completedParts.length / totalParts) * 100)
+        if (bar) bar.style.width = `${progress}%`
+        if (statusEl) statusEl.textContent = `Multipart: ${completedParts.length}/${totalParts} (${progress}%)`
+      }
+
+      // Sort parts by partNumber (required by S3)
+      completedParts.sort((a, b) => a.partNumber - b.partNumber)
+
+      // 3. Complete
+      if (statusEl) statusEl.textContent = t('uploadFinalizing') || 'Finalizing...'
+      await this.#r2.completeMultipartUpload(key, uploadId, completedParts)
+
+      if (bar) {
+        bar.classList.add('done')
+        bar.style.width = '100%'
+      }
+      if (statusEl) statusEl.textContent = `✓ ${fileSizeMB} MB`
+    } catch (e) {
+      // Abort on failure
+      if (bar) bar.classList.add('error')
+      if (statusEl) statusEl.textContent = `Error: ${e.message}`
+      try {
+        await this.#r2.abortMultipartUpload(key, uploadId)
+      } catch {
+        // Ignore abort errors
+      }
+      throw e
     }
   }
 }

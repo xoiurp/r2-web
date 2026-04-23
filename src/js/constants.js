@@ -9,7 +9,10 @@ export const SORT_BY_KEY = 'r2-manager-sort-by'
 export const SORT_ORDER_KEY = 'r2-manager-sort-order'
 export const PAGE_SIZE = 200
 export const TOAST_DURATION = 3000
-export const MAX_UPLOAD_SIZE = 300 * 1024 * 1024 // 300 MB
+export const MAX_UPLOAD_SIZE = 300 * 1024 * 1024 // 300 MB (single PUT)
+export const MULTIPART_THRESHOLD = 100 * 1024 * 1024 // 100 MB - use multipart above this
+export const MULTIPART_PART_SIZE = 100 * 1024 * 1024 // 100 MB per part
+export const MAX_MULTIPART_SIZE = 5 * 1024 * 1024 * 1024 * 1024 // 5 TB (S3 multipart limit)
 
 export const IMAGE_RE = /\.(jpg|jpeg|png|gif|webp|svg|ico|bmp|avif)$/i
 export const COMPRESSIBLE_IMAGE_RE = /\.(jpe?g|png|webp|avif)$/i
